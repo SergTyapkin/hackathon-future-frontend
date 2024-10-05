@@ -5,26 +5,17 @@ const Storage = new Vuex.Store({
     user: {
       id: String(),
       name: String(),
-      group: String(),
-      tg: String(),
-      vk: String(),
       email: String(),
       phone: String(),
       isAdmin: Boolean(),
-
+      interests: [],
+      
       isSignedIn: false,
     },
   },
   mutations: {
     SET_USER(state, userData) {
-      state.user.id = String(userData.id);
-      state.user.name = String(userData.name);
-      state.user.group = String(userData.group);
-      state.user.tg = String(userData.telegram);
-      state.user.vk = String(userData.vk);
-      state.user.email = String(userData.email);
-      state.user.phone = String(userData.phone_number);
-      state.user.isAdmin = Boolean(userData.is_admin);
+      state.user = userData
 
       state.user.isSignedIn = true;
     },

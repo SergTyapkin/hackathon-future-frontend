@@ -4,54 +4,57 @@
 @require '../../styles/fonts.styl'
 @require '../../styles/utils.styl'
 
+
+          
 </style>
 
 <template>
   <div class="root-profile">
     <div class="content-block">
       <header class="header">ПРОФИЛЬ</header>
-      <div class="box user-block">
-        <div class="user-name-row">
-          <div class="user-name-id-block">
-            <div class="user-name">{{ $user.name }}</div>
-            <div class="user-id">#{{ String($user.id || '').padStart(4, '0') }}</div>
+      <div class="profile-info">
+        <div class="user-icon-name">
+          <div class="user-photo">
+            <img>
           </div>
-          <button class="copy-id-button" @click="copyToClipboard($user.id, 'Твоё ID')"><img src="../../../res/icons/copy.svg" alt=""></button>
+          <div class="user-name">
+            <input class="data" v-model="$user.name">
+          </div>
+        </div>
+        <div class="user-data">
+          <header class="header-1">Данные</header>
+          <div class="data-info">
+            <div class="contacts-form">
+              <div class="contacts">
+                <div class="data-row">
+                  <div class="field">Email:</div>
+                  <input class="data" v-model="$user.email">
+                </div>
+                <div class="data-row">
+                  <div class="field">Номер телефона:</div>
+                  <input class="data" v-model="$user.phone">
+                </div>
+                <div class="data-row">
+                  <div class="field">Интересы:</div>
+                  <input class="data" v-model="$user.interests">
+                </div>
+              </div>
+              <button v-if="!isInEditData" class="button-edit" @click="isInEditData = true">Изменить</button>
+              <button v-else class="button-save" @click="saveUserData">Сохранить</button>
+            </div>
+            <div class="parol-info">
+              <div class="data-row">
+                <div class="field">Пароль:</div>
+                <div class="data">****</div>
+                <div class="button-edit">
+                  <button class="change-password">Сменить пароль</button>
 
-          <CircleLoading v-if="loadingProfile" size="30px" light></CircleLoading>
-          <button v-else class="button-edit" @click="changeUserParam('name')">Изменить</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="data-row">
-          <div class="field">Группа:</div>
-          <div class="data">{{ $user.group }}</div>
-          <button class="button-edit" @click="changeUserParam('group')">Изменить</button>
-        </div>
-        <div class="data-row">
-          <div class="field">Email:</div>
-          <div class="data">{{ $user.email }}</div>
-          <button class="button-edit" @click="changeUserParam('email')">Изменить</button>
-        </div>
-        <div class="data-row">
-          <div class="field">Telegram:</div>
-          <div class="data">@{{ $user.tg }}</div>
-          <button class="button-edit" @click="changeUserParam('telegram', 'tg')">Изменить</button>
-        </div>
-        <div class="data-row">
-          <div class="field">Вконтакте:</div>
-          <div class="data">vk.com/{{ $user.vk }}</div>
-          <button class="button-edit" @click="changeUserParam('vk')">Изменить</button>
-        </div>
-        <div class="data-row">
-          <div class="field">Номер телефона:</div>
-          <div class="data">{{ $user.phone }}</div>
-          <button class="button-edit" @click="changeUserParam('phone_number', 'phone')">Изменить</button>
-        </div>
-
-        <div class="buttons-row">
-          <router-link :to="{name: 'changePassword'}">
-            <button class="change-password">Сменить пароль</button>
-          </router-link>
-
+        <div class="logout">
           <button class="logout-button" @click="logout">Выйти</button>
         </div>
       </div>
@@ -80,35 +83,21 @@ export default {
     await this.init();
   },
 
-  methods: {
-    async changeUserParam(fieldName, fieldNameUser=fieldName, overrideHavingValue=null) {
-      const newUserData = {
-        name: this.$user.name,
-        group: this.$user.group,
-        telegram: this.$user.tg,
-        vk: this.$user.vk,
-        email: this.$user.email,
-        phone_number: this.$user.phone,
-      };
-      const inputValue = await this.$modals.prompt(overrideHavingValue ? "Неверный формат" : "Изменить значение поля", "Введите новое значение", overrideHavingValue || newUserData[fieldName]);
-      if (!inputValue) {
-        return;
-      }
-      if (!Validators[fieldNameUser].validate(inputValue)) {
-        this.changeUserParam(fieldName, fieldNameUser, inputValue);
-        return;
-      }
 
-      newUserData[fieldName] = Validators[fieldNameUser].prettifyResult(inputValue);
-      this.loadingProfile = true;
-      const {ok} = await this.$api.editProfile(newUserData.name, newUserData.group, newUserData.telegram, newUserData.vk, newUserData.email, newUserData.phone_number);
-      this.loadingProfile = false;
+
+  methods: {
+    async saveUserData(name,email,phone,interests){
+      this.loading = true;
+      const {ok} = await this.$api.editProfile(this.$user.name,this.$user.email,this.$user.phone,this.$user.interests);
+      this.loading = false;
+
       if (!ok) {
-        this.$popups.error(`Не удалось изменить значение поля ${fieldName}`);
+        this.$popups.error('Ошибка','Не удалось изменить данные');
         return;
       }
-      this.$user[fieldNameUser] = newUserData[fieldName];
+      this.isInEditData = false;
     },
+  
 
 
     async logout() {
@@ -124,10 +113,7 @@ export default {
       this.$router.push({name: "login"});
     },
 
-    copyToClipboard(str, description) {
-      navigator.clipboard.writeText(str);
-      this.$popups.success("Скопировано", `${description} скопировано в буфер обмена`)
-    },
+    
   },
 }
 </script>
