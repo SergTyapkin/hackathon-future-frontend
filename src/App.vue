@@ -4,7 +4,6 @@
 .wrapper
   width 100%
   min-height 'calc(100vh - %s)' % headerHeight
-  padding-top headerHeight
 
   > *
     position absolute
@@ -112,6 +111,7 @@ export default {
     this.global.$popups = this.$refs.popups;
     this.global.$app = this;
     this.global.$api = new API(`/api`);
+    this.global.$isMobile = false;
 
     this.checkMobileScreen();
     window.addEventListener('resize', (e) => {

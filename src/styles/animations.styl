@@ -19,6 +19,29 @@ animation-roll-down(start-height=0, duration=2s, padding=0)
             padding padding
             max-height unset
 
+
+animation-opacity-slide-in(xDiff=-50px, yDiff=0)
+    opacity 0
+    &.__animation-started
+        animation opacity-slide-in 0.5s cubic-bezier(0.21, 0.94, 0.58, 1) forwards
+        animation-delay calc(0.2s * var(--animation-index))
+    @keyframes opacity-slide-in
+        from
+            transform translate(xDiff, yDiff)
+            opacity 0
+        to
+            transform translate(0, 0)
+            opacity 1
+
+opacity-slide-show(xDiff=-50px, yDiff=0, duration=0.4s, delay=0.1s)
+    transform translate(xDiff, yDiff)
+    opacity 0
+    transition 0.4s ease
+    transition-delay calc(0.2s * var(--animation-index))
+    &.__visible
+        transform translate(0, 0)
+        opacity 1
+
 hover-effect-opacity()
     cursor pointer
     transition all 0.2s ease

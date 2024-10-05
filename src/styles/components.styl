@@ -8,10 +8,40 @@ block(colorBorder=colorBorder)
     padding 35px
     border colorBorder 2px solid
     border-radius borderRadiusXL
+    backdrop-filter blur(10px)
+    background linear-gradient(30deg, transparent, mix(white, transparent, 30%))
     header
         font-large()
     section
         font-medium()
+
+block-emp-1(xDiff=20px, yDiff=20px)
+    background mix(colorEmp11, transparent, 80%)
+    padding 50px
+    border-radius borderRadiusXL
+    position relative
+    color colorTextLight1
+    &::before
+    &::after
+        content ''
+        position absolute
+        inset (yDiff) (xDiff) (- yDiff) (- xDiff)
+        background mix(colorEmp13, transparent, 70%)
+        border-radius inherit
+        z-index -1
+    &::after
+        background mix(colorEmp15, transparent)
+        inset (yDiff * 1.7) (xDiff * 1.7) (- yDiff * 1.7) (- xDiff * 1.7)
+        z-index -2
+block-emp-2(xDiff=20px, yDiff=20px)
+    block-emp-1(xDiff, yDiff)
+    background mix(colorEmp21, transparent, 80%)
+    &::before
+        background mix(colorEmp22, transparent, 70%)
+    &::after
+        background mix(colorEmp23, transparent)
+
+
 block-bg(colorBg=colorBg)
     display block
     background colorBg

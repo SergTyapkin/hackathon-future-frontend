@@ -22,10 +22,17 @@ button-no-styles()
     border none
     margin 0
     padding 0
+    cursor pointer
 list-no-styles()
     margin 0
     padding 0
     list-style none
+
+svg-inside(size=40px, marginLeft=10px, marginRight=10px)
+    > img
+        width size
+        height size
+        margin 0 marginRight 0 marginLeft
 
 pc-hidden()
     @media ({desktop})

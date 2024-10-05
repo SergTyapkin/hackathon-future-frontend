@@ -2,22 +2,27 @@
 // Ни в каких других файлах не должно быть цветов, указанных через #RGB (black(#000) и white(#fff) использовать можно).
 // Только через зависимости от этих, например mix(colorEmp1, white).
 
+
 colorEmp11 = #ff6d00
 colorEmp12 = #ff7900
 colorEmp13 = #ff8400
 colorEmp14 = #ff9000
 colorEmp15 = #ff9e01
+colorEmp16 = #ff910d
 
-colorEmp21 = #240046
-colorEmp22 = #3c0a6b
-colorEmp23 = #5a199b
-colorEmp24 = #7b2bbe
-colorEmp25 = #9d4edd
+colorEmp21 = #4d41a2
+colorEmp22 = #694bc2
+colorEmp23 = #9366e1
+colorEmp24 = #b964ff
+colorEmp25 = #c876ff
 
-colorTextEmp1 = #90f3f1
-colorTextEmp2 = #76f973
+colorTextEmp1 = #a1e3e1
+colorTextEmp2 = #67f865
 
-colorBg = #ffffff
+//colorBg = linear-gradient(45deg, black, #ff9e01 50%, #9d4edd 50%, transparent)
+//colorBg = linear-gradient(180deg, #ff6d00, #ff9e01 80px, #bca4d9 80px, white)
+//colorBg = radial-gradient(colorEmp11, colorEmp21, transparent) 80% 20%
+colorBg = white
 
 colorText1 = #1a1a1a
 colorText2 = mix(colorText1, white, 90%)
@@ -37,11 +42,12 @@ colorError = #ff5556
 
 colorBorder = colorText1
 
+borderRadiusXL = 30px
 borderRadiusL = 20px
 borderRadiusM = 10px
 borderRadiusS = 5px
 
-headerHeight = 80px
+headerHeight = 90px
 
 mobile = unquote('max-width: 700px')
 desktop = unquote('min-width: 701px')

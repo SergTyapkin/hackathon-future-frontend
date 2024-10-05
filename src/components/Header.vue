@@ -2,25 +2,47 @@
 @require '../styles/constants.styl'
 @require '../styles/fonts.styl'
 @require '../styles/buttons.styl'
+@require '../styles/animations.styl'
+@require '../styles/components.styl'
 
 .root-header
+  block-emp-2(0, 8px)
   width 100%
+  background colorEmp21
   display flex
-  position fixed
   justify-content space-between
   align-items center
-  padding 0 40px
+  padding 0 60px
   height headerHeight
-  font-large()
+  border-radius 0 0 borderRadiusXL borderRadiusXL
+  color colorTextLight1
 
+  .link
+    button-no-styles()
+    font-medium()
+    color colorTextLight1
+    padding 0 5px
+    hover-effect-opacity()
+    hover-effect-underline-center()
+  .logo
+    font-special-large()
+    font-bold()
+    text-transform uppercase
+    svg-inside(40px, -10px, 10px)
+    centered-flex-container()
   .profile
     button-fill()
+    font-medium()
+
 </style>
 
 <template>
   <header class="root-header">
-    <div class="logo">Logo</div>
-    <button class="profile">Profile ></button>
+    <router-link class="link logo" :to="{name: 'default'}"><img src="../../res/icons/projector.svg" alt="logo">Проектор</router-link>
+    <router-link class="link" :to="{name: 'profile'}">Проекты</router-link>
+    <router-link class="link" :to="{name: 'profile'}">Новости</router-link>
+    <router-link class="link" :to="{name: 'profile'}">Гос. Проекты</router-link>
+    <router-link class="link profile" :to="{name: 'profile'}">Профиль ></router-link>
   </header>
 </template>
 

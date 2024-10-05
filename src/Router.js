@@ -6,11 +6,11 @@ import Profile from "~/views/User/Profile.vue";
 import ChangePassword from "~/views/User/ChangePassword.vue";
 import Page404 from "~/views/Page404.vue";
 import RestorePassword from "~/views/User/RestorePassword.vue";
-import Page from "~/views/Page.vue";
+import PageLanding from "~/views/PageLanding.vue";
 
 export default function createVueRouter(Store) {
     const routes = [
-        {path: '/', name: 'default', component: Page, meta: {noLoginRequired: true}},
+        {path: '/', name: 'default', component: PageLanding, meta: {noLoginRequired: true}},
 
         {path: '/register', name: 'register', component: Registration, meta: {noLoginRequired: true}},
         {path: '/login', name: 'login', component: Login, meta: {noLoginRequired: true}},
@@ -30,51 +30,51 @@ export default function createVueRouter(Store) {
 
     let router_got_user = false;
     Router.beforeEach(async (to, from, next) => {
-        if (!router_got_user) {
-            await Store.dispatch('GET_USER');
-            router_got_user = true;
-        }
-
-        const notLoginedRedirect = {
-            name: 'login'
-        }
-        const loginedRedirect = {
-            name: 'profile',
-        }
-
-        if (to.path === '/' || to.path === '') {
-            if (Store.state.user.isSignedIn) {
-                next(loginedRedirect);
-                return;
-            }
-            next(notLoginedRedirect);
-            return;
-        }
-
-        // Login required redirects
-        if (to.matched.some(record => record.meta.loginRequired === true || record.meta.adminRequired === true)) {
-            if (Store.state.user.isSignedIn) {
-                next();
-                return;
-            }
-            next(notLoginedRedirect);
-            return;
-        } else if (to.matched.some(record => record.meta.noLoginRequired === true)) {
-            if (!Store.state.user.isSignedIn) {
-                next();
-                return;
-            }
-            next(loginedRedirect);
-            return;
-        }
-        if (to.matched.some(record => record.meta.adminRequired === true)) {
-            if (Store.state.user.isAdmin) {
-                next();
-                return;
-            }
-            next(loginedRedirect);
-            return;
-        }
+        // if (!router_got_user) {
+        //     await Store.dispatch('GET_USER');
+        //     router_got_user = true;
+        // }
+        //
+        // const notLoginedRedirect = {
+        //     name: 'login'
+        // }
+        // const loginedRedirect = {
+        //     name: 'profile',
+        // }
+        //
+        // if (to.path === '/' || to.path === '') {
+        //     if (Store.state.user.isSignedIn) {
+        //         next(loginedRedirect);
+        //         return;
+        //     }
+        //     next(notLoginedRedirect);
+        //     return;
+        // }
+        //
+        // // Login required redirects
+        // if (to.matched.some(record => record.meta.loginRequired === true || record.meta.adminRequired === true)) {
+        //     if (Store.state.user.isSignedIn) {
+        //         next();
+        //         return;
+        //     }
+        //     next(notLoginedRedirect);
+        //     return;
+        // } else if (to.matched.some(record => record.meta.noLoginRequired === true)) {
+        //     if (!Store.state.user.isSignedIn) {
+        //         next();
+        //         return;
+        //     }
+        //     next(loginedRedirect);
+        //     return;
+        // }
+        // if (to.matched.some(record => record.meta.adminRequired === true)) {
+        //     if (Store.state.user.isAdmin) {
+        //         next();
+        //         return;
+        //     }
+        //     next(loginedRedirect);
+        //     return;
+        // }
         next();
     });
 
