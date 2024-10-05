@@ -16,6 +16,8 @@
   height headerHeight
   border-radius 0 0 borderRadiusXL borderRadiusXL
   color colorTextLight1
+  @media({mobile})
+    padding 0 20px
 
   .link
     button-no-styles()
@@ -24,16 +26,25 @@
     padding 0 5px
     hover-effect-opacity()
     hover-effect-underline-center()
+    @media({mobile})
+      font-small()
+      word-break break-all
   .logo
     font-special-large()
     font-bold()
     text-transform uppercase
     svg-inside(40px, -10px, 10px)
     centered-flex-container()
+    @media({mobile})
+      font-size 0
+      > img
+        margin 0
   .profile
     button-fill()
     font-medium()
-
+    @media({mobile})
+      font-small()
+      padding 5px
 </style>
 
 <template>

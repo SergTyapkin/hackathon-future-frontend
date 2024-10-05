@@ -33,18 +33,27 @@
         svg-inside(40px, 0, 10px)
         text-transform uppercase
         font-special-large-extra()
+        @media({mobile})
+          font-special-large()
         font-bold()
       .column
         margin-top 20px
         display flex
         flex-direction column
         gap 20px
+        @media({mobile})
+          gap 3px
+          margin-top -20px
         .accent
           color colorTextEmp2
         &.contacts
+          @media({mobile})
+            margin-top -100px
           gap 10px
         .text-big
           font-large()
+          @media({mobile})
+            font-medium()
     .copyright
       border-top 1px solid colorTextLight1
       padding 20px 0
