@@ -22,7 +22,7 @@ bg = colorBgDark
       text-align left
       text-decoration none
     .signin-button
-      button()
+      button-link()
 </style>
 
 <template>

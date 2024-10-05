@@ -6,7 +6,13 @@ export default class MY_API extends REST_API {
     login = (email, password, clientBrowser, clientOS) => this.post('/api/user/auth', {_model: Models.User, email, password, clientBrowser, clientOS});
     register = (name, group, telegram, vk, email, phone_number, password, clientBrowser, clientOS) => this.post('/api/user', {_model: Models.User, name, group, telegram, vk, email, phone_number, password, clientBrowser, clientOS});
     logout = () => this.delete('/api/user/session', {_model: {}});
-    getUser = () => this.get('/api/user', {_model: Models.User});
+    getUser = () => ({
+        data: {
+            username: 'Василий',
+        },
+        status: 200,
+        ok: true,
+    }) //this.get('/api/user', {_model: Models.User});
     getUserById = (id) => this.get(`/api/user`, {_model: Models.User, id});
     sendConfirmationLetter = (name, email) => this.post('/api/email/confirm', {_model: Models.User, name, email});
     confirmEmailByCode = (secretCode) => this.put('/api/user/email/confirm', {_model: Models.User, secretCode});

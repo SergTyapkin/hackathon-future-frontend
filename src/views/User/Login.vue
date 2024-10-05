@@ -20,7 +20,7 @@
       text-decoration none
       text-align left
     .profile-button
-      button()
+      button-link()
     .signin-links
       display flex
       width 100%
