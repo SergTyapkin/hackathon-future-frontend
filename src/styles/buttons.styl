@@ -3,74 +3,51 @@
 @require 'utils.styl'
 
 
-border-color = colorBorder
-border-color-hover = colorEmp1
-border-color-disabled = mix(colorBorder, colorBg, 50%)
-text-color = colorBorder
-text-color-hover-1 = colorEmp1
-text-color-disabled = mix(colorBorder, colorBg, 50%)
-bg-color = colorBg
-bg-color-hover = saturation(bg-color, 120%)
-bg-color-disabled = saturation(bg-color, 20%)
-
-text-color-hover-2 = colorText1
-shadow-color = mix(black, transparent, 70%)
-
-
-button()
-    color text-color
+button(
+    color-bg, color-text, color-border,
+    color-bg-hover, color-text-hover, color-border-hover,
+    color-bg-disabled, color-text-disabled, color-border-disabled
+)
+    color color-text
     font-medium()
     font-bold()
     padding 10px
-    border colorBorder solid 1px
-    border-radius 999999999px
-    text-shadow none
-    transition all 0.2s ease
+    border-radius borderRadiusM
     cursor pointer
     box-sizing border-box
-    background bg-color
+    background color-bg
+    border color-border solid 1px
+    trans()
     centered-margin()
     centered-flex-container()
 
     &:hover
-        color text-color-hover-1
-        border-color border-color-hover
-    //box-shadow 5px 5px 15px shadow-color
+        color color-text-hover
+        border-color color-border-hover
+        background color-bg-hover
 
     &[disabled]:not([disabled=false])
         pointer-events none
-        color text-color-disabled
-        background bg-color-disabled
-        box-shadow none
+        color color-text-disabled
+        border-color color-border-disabled
+        background color-bg-disabled
 
-button-no-fill()
-    button()
-    padding 10px 20px
-    min-height 40px
-    background transparent
-    border bg-color solid 2px
-    color colorText1
-    &:hover
-        background bg-color
-        color colorTextDark1
-        border-color bg-color
-    &[disabled]:not([disabled=false])
-        color colorText3
-        background mix(bg-color, transparent, 40%)
-
+button-link()
+    button(
+        transparent, colorEmp1, colorEmp1,
+        mix(transparent, white, 95%), colorText1, colorText1,
+        mix(transparent, white, 50%), mix(colorEmp1, colorBg), mix(colorEmp1, colorBg)
+    )
 button-danger()
-    button()
-    background mix(colorError, transparent)
-    border-color colorError
-    &:hover
-        border-color mix(colorError, white)
-        color colorText1
-button-success()
-    button()
-    background mix(colorSuccess, transparent)
-    border-color colorSuccess
-    color colorText3
-    &:hover
-        border-color mix(colorSuccess, white)
-        color colorText1
+    button(
+            mix(colorError, colorBg, 80%), colorText3, colorError,
+            mix(colorError, colorBg, 1000%), colorText1, colorEmp1,
+            mix(colorError, colorBg, 20%), colorText5, colorBg
+    )
+button-danger()
+    button(
+            mix(colorSuccess, colorBg, 80%), colorText3, colorSuccess,
+            mix(colorSuccess, colorBg, 1000%), colorText1, colorEmp1,
+            mix(colorSuccess, colorBg, 20%), colorText5, colorBg
+    )
 
