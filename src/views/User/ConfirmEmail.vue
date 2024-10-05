@@ -11,7 +11,7 @@
 
 
 <script>
-import CircleLoading from "~/components/CircleLoading.vue";
+import CircleLoading from "~/components/loaders/CircleLoading.vue";
 
 export default {
   components: {CircleLoading},

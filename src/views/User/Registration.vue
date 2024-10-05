@@ -46,7 +46,7 @@ bg = colorBgDark
 <script>
 import FormWithErrors from "~/components/FormWithErrors.vue";
 import {detectBrowser, detectOS} from "~/utils/utils";
-import CircleLoading from "~/components/CircleLoading.vue";
+import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import {Validators} from "~/utils/validators";
 
 

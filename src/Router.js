@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Registration from "./views/User/Registration.vue";
-import Login from "./views/User/Login.vue";
-import Profile from "./views/User/Profile.vue";
-import ChangePassword from "./views/User/ChangePassword.vue";
-import Page404 from "./views/Page404.vue";
-import RestorePassword from "./views/User/RestorePassword.vue";
+import Registration from "~/views/User/Registration.vue";
+import Login from "~/views/User/Login.vue";
+import Profile from "~/views/User/Profile.vue";
+import ChangePassword from "~/views/User/ChangePassword.vue";
+import Page404 from "~/views/Page404.vue";
+import RestorePassword from "~/views/User/RestorePassword.vue";
 import Page from "~/views/Page.vue";
 
 export default function createVueRouter(Store) {

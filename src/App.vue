@@ -1,19 +1,21 @@
 <style lang="stylus" scoped>
 @require 'styles/constants.styl'
-@require 'styles/buttons.styl'
-@require 'styles/fonts.styl'
 
 .wrapper
   width 100%
-  min-height 100vh
+  min-height 'calc(100vh - %s)' % headerHeight
+  padding-top headerHeight
 
   > *
     position absolute
     width 100%
-    min-height 100vh
+    min-height 'calc(100vh - %s)' % headerHeight
 </style>
 
 <template>
+  <Header></Header>
+<!--  <SideMenu></SideMenu>-->
+
   <div class="wrapper">
     <router-view v-slot="{ Component }">
       <transition name="scale-in">
@@ -79,12 +81,13 @@
 <script>
 import {getCurrentInstance} from "vue";
 import {Modals, Popups} from "@sergtyapkin/modals-popups";
-import CircleLoading from "./components/CircleLoading.vue";
-import API from "./utils/API";
+import API from "~/utils/API";
+import Header from "~/components/Header.vue";
+import SideMenu from "~/components/SideMenu.vue";
 
 
 export default {
-  components: { CircleLoading, Modals, Popups },
+  components: {SideMenu, Header, Modals, Popups },
 
   data() {
     return {

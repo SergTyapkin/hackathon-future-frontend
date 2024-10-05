@@ -11,14 +11,13 @@ button(
     color color-text
     font-medium()
     font-bold()
-    padding 10px
+    padding 10px 15px
     border-radius borderRadiusM
     cursor pointer
     box-sizing border-box
     background color-bg
-    border color-border solid 1px
+    border color-border solid 2px
     trans()
-    centered-margin()
     centered-flex-container()
 
     &:hover
@@ -32,22 +31,35 @@ button(
         border-color color-border-disabled
         background color-bg-disabled
 
+
+button-fill()
+    button(
+        colorEmp11, colorTextEmp1, colorEmp11,
+        colorEmp21, colorTextEmp2, colorEmp21,
+        mix(colorEmp11, colorBg, 50%), mix(colorTextEmp1, colorBg), colorEmp11
+    )
+button-fill-accent()
+    button(
+        colorEmp21, colorTextEmp2, colorEmp21,
+        colorEmp11, colorTextEmp1, colorEmp11,
+        mix(colorEmp21, colorBg, 50%), mix(colorTextEmp2, colorBg), colorEmp21
+    )
 button-link()
     button(
-        transparent, colorEmp1, colorEmp1,
-        mix(transparent, white, 95%), colorText1, colorText1,
-        mix(transparent, white, 50%), mix(colorEmp1, colorBg), mix(colorEmp1, colorBg)
+        transparent, colorEmp11, colorEmp11,
+        mix(transparent, colorBg, 95%), colorEmp25, colorEmp25,
+        mix(transparent, colorBg, 50%), mix(colorEmp11, colorBg), mix(colorEmp11, colorBg)
     )
 button-danger()
     button(
             mix(colorError, colorBg, 80%), colorText3, colorError,
-            mix(colorError, colorBg, 1000%), colorText1, colorEmp1,
+            mix(colorError, colorBg, 100%), colorText1, colorEmp1,
             mix(colorError, colorBg, 20%), colorText5, colorBg
     )
 button-danger()
     button(
             mix(colorSuccess, colorBg, 80%), colorText3, colorSuccess,
-            mix(colorSuccess, colorBg, 1000%), colorText1, colorEmp1,
+            mix(colorSuccess, colorBg, 100%), colorText1, colorEmp1,
             mix(colorSuccess, colorBg, 20%), colorText5, colorBg
     )
 

@@ -57,7 +57,7 @@
 
 <script>
 import FormWithErrors from "~/components/FormWithErrors.vue";
-import CircleLoading from "~/components/CircleLoading.vue";
+import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import {Validators} from "~/utils/validators";
 
 

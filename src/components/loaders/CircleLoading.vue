@@ -1,9 +1,7 @@
 <style lang="stylus" scoped>
-@require '../styles/constants.styl'
-
 .circle-loading
-  //width 60px //in props
-  //height 60px //in props
+  width var(--size)
+  height var(--size)
   margin-left auto
   margin-right auto
 
@@ -17,12 +15,12 @@
   position: absolute;
   width: 7%;
   height: 7%;
-  background: colorBgDark;
+  background: #00000080;
   border-radius: 50%;
   animation: lds-default 1.2s linear infinite;
 }
 .lds-default.light div {
-  background: colorBgLightMax;
+  background: #ffffff80;
 }
 .lds-default div:nth-child(1) {
   animation-delay: 0s;
@@ -98,7 +96,7 @@
 </style>
 
 <template>
-  <div class="circle-loading" :style="`height: ${size}; width: ${size};`">
+  <div class="circle-loading" :style="{'--size': size}">
     <div class="lds-default" :class="{light}"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
   </div>
 </template>
@@ -107,6 +105,7 @@
 export default {
   props: {
     size: {
+      type: String,
       default: '60px'
     },
     light: {

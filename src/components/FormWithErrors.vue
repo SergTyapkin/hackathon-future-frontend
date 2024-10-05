@@ -119,7 +119,7 @@ input-border = 2px solid border-color
 </template>
 
 <script>
-import CircleLoading from "./CircleLoading.vue";
+import CircleLoading from "~/components/loaders/CircleLoading.vue";
 
 export default {
   components: {CircleLoading},

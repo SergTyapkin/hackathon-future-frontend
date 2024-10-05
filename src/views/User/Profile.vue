@@ -61,7 +61,7 @@
 
 
 <script>
-import CircleLoading from "~/components/CircleLoading.vue";
+import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import FloatingButton from "~/components/FloatingButton.vue";
 import {Validators} from "~/utils/validators";
 
