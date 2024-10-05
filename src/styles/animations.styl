@@ -1,0 +1,33 @@
+@require 'constants.styl'
+
+animation-roll-down(start-height=0, duration=2s, padding=0)
+    opacity 0
+    max-height start-height
+    padding-top 0
+    padding-bottom 0
+    animation animation-roll-down duration ease forwards
+    @keyframes animation-roll-down
+        0%
+        10%
+            opacity 1
+        99%
+            opacity 1
+            padding padding
+            max-height 3000px
+        100%
+            opacity 1
+            padding padding
+            max-height unset
+
+hover-effect()
+    cursor pointer
+    transition all 0.2s ease
+    @media ({desktop})
+        &:hover
+            opacity 0.7
+hover-effect-underline(color=white)
+    background linear-gradient(color, color) 50% 100% / 0 1px no-repeat
+    transition all .2s
+    @media ({desktop})
+        &:hover
+            background-size 100% 1px

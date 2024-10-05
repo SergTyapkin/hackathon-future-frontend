@@ -1,0 +1,36 @@
+@require 'scrollbars.styl'
+@require 'constants.styl'
+
+html
+    overflow-x hidden
+    min-height 100%
+
+*
+    box-sizing border-box
+    margin 0
+    padding 0
+
+body
+    scrollable()
+    margin 0
+    padding 0
+    border none
+    outline none
+    -webkit-overflow-scrolling touch
+    width 100vw
+    min-height 100vh
+    height 100%
+    position relative
+    overflow-x hidden
+    font-family Arial, monospace
+    background colorBg
+    color colorText1
+
+#app
+    width 100%
+    height 100%
+
+a
+    text-decoration none
+a:visited
+    color inherit
