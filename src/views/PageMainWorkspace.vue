@@ -10,11 +10,24 @@
 .root-main-workspace
   padding 80px
 
+  .title
+    text-transform uppercase
+    font-large-extra()
 </style>
 
 <template>
   <div class="root-main-workspace">
-    <ProjectsList :list="projectsList"></ProjectsList>
+    <section>
+      <header class="title">Мои проекты</header>
+      <ProjectsList :list="projectsList"></ProjectsList>
+    </section>
+
+    <section>
+      <header class="title">Новости</header>
+<!--      <NewsList :list="newsList"></NewsList>-->
+    </section>
+
+    <div class="bg"></div>
   </div>
 </template>
 
@@ -34,6 +47,7 @@ export default {
       loading: false,
 
       projectsList: [],
+      newsList: [],
     }
   },
 

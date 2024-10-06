@@ -26,7 +26,7 @@ export default class MY_API extends REST_API {
         if (!model) {
             return {ok, data: dataRes, status};
         }
-        return {ok, data: validateModel(dataRes, model), status};
+        return {ok, data: validateModel(model, dataRes), status};
     }
     #post(path, data = {}, model = undefined) {return this.modelParsedRequest(super.post, path, data, model)}
     #get(path, data = {}, model = undefined) {return this.modelParsedRequest(super.get, path, data, model)}
