@@ -55,7 +55,13 @@ export const Project = {
   rating: {
     type: Number,
     optional: true,
-  }
+  },
+  docs: {
+    type: Array,
+    item: String,
+    optional: true,
+    default: [],
+  },
 }
 
 export const ProjectsList = {
@@ -103,6 +109,34 @@ export const FeedsList = {
     item: {
       type: Object,
       fields: Feed,
+    }
+  }
+}
+
+
+export const GosProgram = {
+  id: String,
+  title: String,
+  info: String,
+  tags: {
+    type: Array,
+    item: String,
+    optional: true,
+    default: [],
+  },
+  link: String,
+  previewUrl: {
+    type: String,
+    from: 'preview_url'
+  },
+}
+
+export const GosProgramsList = {
+  programs: {
+    type: Array,
+    item: {
+      type: Object,
+      fields: GosProgram,
     }
   }
 }

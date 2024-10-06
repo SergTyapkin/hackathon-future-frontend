@@ -17,6 +17,7 @@
       align-items stretch
       border-radius 999999px
       border 2px solid colorEmp11
+      background colorBg
       .input
         input-no-styles()
         font-small-extra()

@@ -17,35 +17,36 @@
 
 <template>
   <div class="root-page-all-projects">
-    <header class="title">Все проекты активистов</header>
+    <header class="title">Государственные программы</header>
 
-    <ProjectsList :list="projectsList"></ProjectsList>
+    <GosProgramsList :list="programsList"></GosProgramsList>
   </div>
 </template>
 
 
 <script>
 import ProjectsList from "~/components/ProjectsList.vue";
+import GosProgramsList from "~/components/GosProgramsList.vue";
 
 export default {
-  components: {ProjectsList},
+  components: {GosProgramsList, ProjectsList},
 
   data() {
     return {
       loading: [],
 
-      projectsList: [],
+      programsList: [],
     }
   },
 
   mounted() {
-    this.getProjects();
+    this.getGosPrograms();
   },
 
   methods: {
-    async getProjects() {
+    async getGosPrograms() {
       this.loading = true;
-      const {data, ok} = await this.$api.getAllProjects();
+      const {data, ok} = await this.$api.getAllGosPrograms();
       this.loading = false;
 
       if (!ok) {
@@ -53,7 +54,7 @@ export default {
         return;
       }
 
-      this.projectsList = data.projects;
+      this.programsList = data.programs;
     },
   }
 }
