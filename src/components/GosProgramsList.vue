@@ -19,7 +19,7 @@
     width 100%
     cursor pointer
     display flex
-    background colorEmp21
+    background colorEmp22
     border-radius borderRadiusXL
     trans(0.5s)
     .preview
@@ -45,7 +45,7 @@
         trans(0.5s)
         opacity 0.8
     &:hover
-      background colorEmp22
+      background colorEmp23
       .preview
         &::after
           background-position-x 0
@@ -67,7 +67,10 @@
         svg-inside(20px, 0, 10px)
         font-small()
         color colorTextLight3
-        padding 10px 0
+        padding 10px 10px 0 0
+        width min-content
+        white-space nowrap
+        hover-effect-underline-center()
         img
           margin-bottom 3px
           opacity 0.6
