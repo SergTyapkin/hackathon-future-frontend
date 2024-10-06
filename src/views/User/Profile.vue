@@ -201,7 +201,6 @@
 
 <script>
 import CircleLoading from "~/components/loaders/CircleLoading.vue";
-import FloatingButton from "~/components/FloatingButton.vue";
 import {Validators} from "~/utils/validators";
 import {DEFAULT_AVATAR_URL, IMAGE_MAX_RES, IMAGE_PROFILE_MAX_RES, UserRoles} from "~/utils/constants";
 import TagsCloud from "~/components/TagsCloud.vue";
@@ -209,7 +208,7 @@ import DragNDropLoader from "~/components/DragNDropLoader.vue";
 
 
 export default {
-  components: {DragNDropLoader, TagsCloud, FloatingButton, Range, CircleLoading },
+  components: {DragNDropLoader, TagsCloud, CircleLoading },
 
   data() {
     return {

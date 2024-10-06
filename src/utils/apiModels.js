@@ -1,4 +1,4 @@
-export const User = { // declare model
+export const User = {
   id: String,
   firstName: {
     type: String,
@@ -34,4 +34,22 @@ export const User = { // declare model
     type: String,
     from: 'info',
   },
+}
+
+export const Project = {
+  id: String,
+  title: String,
+  goals: String,
+  tags: {
+    type: Array,
+    item: String,
+    optional: true,
+    default: [],
+  },
+  region: String,
+  previewUrl: {
+    type: String,
+    from: 'url_for_preview'
+  },
+  format: String,
 }
