@@ -35,6 +35,14 @@ input-no-styles()
     padding 0
 
 
+page-padding(mobilePadding=20px, desktopPadding=80px)
+    padding desktopPadding
+    padding-top 80px
+    @media({mobile})
+        padding mobilePadding
+        padding-top 80px
+
+
 svg-inside(size=40px, marginLeft=10px, marginRight=10px)
     display flex
     align-items center

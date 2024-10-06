@@ -18,6 +18,7 @@
     align-items center
     flex-wrap nowrap
   .feed
+    animation-opacity-slide-in(0, -50px, 0.4s, 0.1s)
     flex 1
     display flex
     gap 30px
@@ -89,7 +90,7 @@
 
 <template>
   <ul class="root-list-feeds">
-    <li v-for="feed in list" class="feed">
+    <li v-for="(feed, idx) in list" class="feed __animation-started" :style="{'--animation-index': idx}">
       <div class="preview"><img :src="feed.previewUrl" alt="preview"></div>
 
       <div class="container-data">

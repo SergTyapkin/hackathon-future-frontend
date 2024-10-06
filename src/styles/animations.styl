@@ -20,11 +20,11 @@ animation-roll-down(start-height=0, duration=2s, padding=0)
             max-height unset
 
 
-animation-opacity-slide-in(xDiff=-50px, yDiff=0)
+animation-opacity-slide-in(xDiff=-50px, yDiff=0, duration=0.5s, delay=0.2s)
     opacity 0
     &.__animation-started
-        animation opacity-slide-in 0.5s cubic-bezier(0.21, 0.94, 0.58, 1) forwards
-        animation-delay calc(0.2s * var(--animation-index))
+        animation opacity-slide-in duration cubic-bezier(0.21, 0.94, 0.58, 1) forwards
+        animation-delay 'calc(%s * var(--animation-index))' % (delay)
     @keyframes opacity-slide-in
         from
             transform translate(xDiff, yDiff)

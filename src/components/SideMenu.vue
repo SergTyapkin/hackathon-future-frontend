@@ -38,7 +38,7 @@
       <router-link to="" class="link">Проекты</router-link>
       <router-link to="" class="link">Новости</router-link>
       <router-link to="" class="link">Партнёры</router-link>
-      <router-link to="" class="link">Гос. проекты</router-link>
+      <router-link to="" class="link">Гос. программы</router-link>
     </div>
   </aside>
 </template>

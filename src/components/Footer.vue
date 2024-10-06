@@ -77,7 +77,7 @@
         </div>
         <div class="column">
           <router-link :to="{name: 'profile'}">Эксперты</router-link>
-          <router-link :to="{name: 'profile'}">Гос. Проекты</router-link>
+          <router-link :to="{name: 'profile'}">Гос. программы</router-link>
         </div>
         <div class="column contacts">
           <div class="">Служба технической поддержки</div>

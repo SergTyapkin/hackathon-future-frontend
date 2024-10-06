@@ -8,6 +8,9 @@ import Page404 from "~/views/Page404.vue";
 import RestorePassword from "~/views/User/RestorePassword.vue";
 import PageLanding from "~/views/PageLanding.vue";
 import PageMainWorkspace from "~/views/PageMainWorkspace.vue";
+import PageAllProjects from "~/views/PageAllProjects.vue";
+import PageAllFeeds from "~/views/PageAllFeeds.vue";
+import PageAllGosPrograms from "~/views/PageAllGosPrograms.vue";
 
 export default function createVueRouter(Store) {
     const routes = [
@@ -18,6 +21,9 @@ export default function createVueRouter(Store) {
         {path: '/profile', name: 'profile', component: Profile, meta: {loginRequired: true}},
 
         {path: '/main', name: 'main', component: PageMainWorkspace, meta: {loginRequired: true}},
+        {path: '/projects', name: 'allProjects', component: PageAllProjects, meta: {loginRequired: true}},
+        {path: '/feeds', name: 'allFeeds', component: PageAllFeeds},
+        {path: '/gos-programs', name: 'gosPrograms', component: PageAllGosPrograms},
 
         {path: '/:pathMatch(.*)*', name: 'page404', component: Page404},
     ];

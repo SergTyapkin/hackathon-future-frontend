@@ -7,9 +7,8 @@
 @require '../styles/animations.styl'
 
 .root-page
-  padding 100px 80px
-  @media({mobile})
-    padding 100px 20px
+  page-padding(100px 80px, 100px 20px)
+
   .section
     min-height calc(100vh - 200px)
     .title

@@ -17,10 +17,11 @@
   @media({mobile})
     gap 30px
   .project
+    animation-opacity-slide-in(0, -50px, 0.4s, 0.1s)
     flex 1
     width 100%
-    max-width 300px
-    min-width 200px
+    max-width 350px
+    min-width 280px
     cursor pointer
     display flex
     flex-direction column
@@ -30,7 +31,7 @@
         block-emp-1(8px, 8px)
         padding 0
       padding 0
-      height 180px
+      height 200px
       margin-bottom 35px
       img
         width 100%
@@ -69,7 +70,7 @@
 
 <template>
   <ul class="root-list-projects">
-    <li v-for="project in list" class="project">
+    <li v-for="(project, idx) in list" class="project __animation-started" :style="{'--animation-index': idx}">
       <div class="preview"><img :src="project.previewUrl" alt="preview"></div>
 
       <div class="data-container">

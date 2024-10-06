@@ -8,9 +8,7 @@
 
 
 .root-main-workspace
-  padding 80px
-  @media({mobile})
-    padding 40px
+  page-padding()
 
   .loading
     centered-absolute-transform()
@@ -42,7 +40,7 @@
 
     <section class="section">
       <header class="title">Новости</header>
-      <NewsList :list="newsList"></NewsList>
+      <FeedsList :list="feedsList"></FeedsList>
     </section>
 
     <div class="bg"><img src="../../res/images/worm11.svg" alt="bg"></div>
@@ -55,24 +53,24 @@ import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import TagsCloud from "~/components/TagsCloud.vue";
 import DragNDropLoader from "~/components/DragNDropLoader.vue";
 import ProjectsList from "~/components/ProjectsList.vue";
-import NewsList from "~/components/NewsList.vue";
+import FeedsList from "~/components/FeedsList.vue";
 
 
 export default {
-  components: {NewsList, ProjectsList, DragNDropLoader, TagsCloud, CircleLoading},
+  components: {FeedsList, ProjectsList, DragNDropLoader, TagsCloud, CircleLoading},
 
   data() {
     return {
       loading: false,
 
       projectsList: [],
-      newsList: [],
+      feedsList: [],
     }
   },
 
   mounted() {
     this.getProjects();
-    this.getNews();
+    this.getFeeds();
   },
 
   methods: {
@@ -89,9 +87,9 @@ export default {
       this.projectsList = data.projects;
     },
 
-    async getNews() {
+    async getFeeds() {
       this.loading = true;
-      const {data, ok} = await this.$api.getFeeds();
+      const {data, ok} = await this.$api.getAllFeeds();
       this.loading = false;
 
       if (!ok) {
@@ -99,7 +97,7 @@ export default {
         return;
       }
 
-      this.newsList = data.feeds;
+      this.feedsList = data.feeds;
     }
   },
 }

@@ -61,9 +61,9 @@
 <template>
   <header class="root-header">
     <router-link class="link logo" :to="{name: 'default'}"><img src="../../res/icons/projector.svg" alt="logo">Проектор</router-link>
-    <router-link class="link" :to="{name: 'profile'}">Проекты</router-link>
-    <router-link class="link" :to="{name: 'profile'}">Новости</router-link>
-    <router-link class="link" :to="{name: 'profile'}">Гос. Проекты</router-link>
+    <router-link class="link" :to="{name: 'allProjects'}">Проекты</router-link>
+    <router-link class="link" :to="{name: 'allFeeds'}">Новости</router-link>
+    <router-link class="link" :to="{name: 'gosPrograms'}">Гос. программы</router-link>
 
     <router-link v-if="$store.state.user.isSignedIn" class="link profile" :to="{name: 'profile'}"><img :src="$user.photoUrl || DEFAULT_AVATAR_URL" alt="avatar">{{ $user.midName }} ></router-link>
     <router-link v-else class="link profile" :to="{name: 'login'}">Войти ></router-link>

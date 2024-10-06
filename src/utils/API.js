@@ -3,7 +3,22 @@ import validateModel from "@sergtyapkin/models-validator";
 import * as Models from "~/utils/apiModels";
 
 export default class MY_API extends REST_API {
-    getUser = () => this.#get('/user/get', undefined, Models.User);
+    getUser = () => ({
+        data: validateModel(Models.User, {
+            id: '418-05',
+            first_name: 'Тяпкин',
+            mid_name: 'Сергей',
+            last_name: 'Сергеевич',
+            email: 'tapkin2002@mail.ru',
+            phone: '8-916-093-28-60',
+            photo_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+            role: 'activist',
+            tags: ['IT', 'Фронтенд', 'Спорт', 'Музыка'],
+            info: 'Светомузыкальный web-разработчик. Тгк: t.me/Serg_Self'
+        }),
+        status: 200,
+        ok: true,
+    }) //this.#get('/user/get', undefined, Models.User);
     editProfile = (first_name, mid_name, last_name, interests, email, phone, bio) => this.#put('/user', {first_name, mid_name, last_name, interests, email, phone, bio});
     editAvatar = (photo_url) => this.#put('/user/avatar', {photo_url});
     login = (email, password, client_browser, client_os) => this.#post('/auth', {email, password, client_browser, client_os});
@@ -33,11 +48,11 @@ export default class MY_API extends REST_API {
                 },
                 {
                     id: '50-61',
-                    title: 'Уничтожаем коммунизм',
-                    goals: 'Убить Ленина, Возродить мировую буржуазию',
+                    title: 'Психоологическая помощь после разбитого коммунизма',
+                    goals: 'Возродить мотивацию строить коммунизм',
                     tags: ['Красный', 'Синий', 'Жёлтый'],
                     region: 'Москва',
-                    url_for_preview: 'https://avatars.mds.yandex.net/i?id=76f28736e27e47fb267124ecba089052db0f203d-12521952-images-thumbs&n=13',
+                    url_for_preview: 'https://avatars.mds.yandex.net/i?id=e0346a13f890524fec12868dc172205f_l-7663003-images-thumbs&n=13',
                     format: 'Очно',
                 },
             ]
@@ -45,8 +60,9 @@ export default class MY_API extends REST_API {
         status: 200,
         ok: true,
     }) //this.#get('/project/my', undefined, Models.ProjectsList);
+    getAllProjects = this.getMyProjects //() => this.#get('/project/all', undefined, Models.ProjectsList);
 
-    getFeeds = () => ({
+    getAllFeeds = () => ({
         data: validateModel(Models.FeedsList, {
             feeds: [
                 {
@@ -116,7 +132,7 @@ export default class MY_API extends REST_API {
         }),
         status: 200,
         ok: true,
-    }) //this.#get(`/feed`, undefined, Models.FeedsList);
+    }) //this.#get(`/feed/all`, undefined, Models.FeedsList);
 
     getUserById = (id) => this.#get(`/user`, {id}, Models.User);
     sendConfirmationLetter = (name, email) => this.#post('/email/confirm', {name, email});

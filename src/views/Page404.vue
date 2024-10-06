@@ -3,8 +3,9 @@
 @require '../styles/fonts.styl'
 
 .root-404
+  page-padding()
   width 100%
-  padding 20px
+
   .form
     margin 20px auto
     max-width 600px
