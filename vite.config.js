@@ -55,6 +55,8 @@ export default defineConfig({
   },
   build: {
     // chunkSizeWarningLimit: 600,
-    cssCodeSplit: false
+    cssCodeSplit: false,
+    minify: false,
+    sourcemap: true,
   }
 });

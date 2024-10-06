@@ -27,7 +27,7 @@ export const User = {
   email: String,
   phone: String,
   role: {
-    type: new Set(['admin', 'activist', 'expert', 'parnter']),
+    type: new Set(['admin', 'activist', 'expert', 'partner']),
     optional: true,
   },
   bio: {
