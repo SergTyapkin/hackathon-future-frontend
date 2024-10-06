@@ -14,7 +14,8 @@ import PageAllGosPrograms from "~/views/PageAllGosPrograms.vue";
 
 export default function createVueRouter(Store) {
     const routes = [
-        {path: '/', name: 'default', component: PageLanding},
+        {path: '/', name: 'default', component: Page404},
+        {path: '/landing', name: 'landing', component: PageLanding},
 
         {path: '/register', name: 'register', component: Registration, meta: {noLoginRequired: true}},
         {path: '/login', name: 'login', component: Login, meta: {noLoginRequired: true}},
@@ -46,17 +47,20 @@ export default function createVueRouter(Store) {
         const loginedRedirect = {
             name: 'profile',
         }
-        const mainWorkingPage = {
+        const mainPageLogined = {
             name: 'main',
+        }
+        const mainPageNotLogined = {
+            name: 'landing',
         }
 
         if (to.path === '/' || to.path === '') {
             if (Store.state.user.isSignedIn) {
-                next(mainWorkingPage);
+                next(mainPageLogined);
                 return;
             }
-            // next(notLoginedRedirect);
-            // return;
+            next(mainPageNotLogined);
+            return;
         }
 
         // Login required redirects
