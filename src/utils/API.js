@@ -18,15 +18,18 @@ export default class MY_API extends REST_API {
     restorePassword = (secretCode, newPassword) => this.#put('/user/password', {secretCode, newPassword});
 
 
-    async modelParsedRequest(requestFunc, path, data, model = {}) {
+    async modelParsedRequest(requestFunc, path, data, model = undefined) {
         const {ok, data: dataRes, status} = await requestFunc.bind(this)(path, data);
         if (!ok) {
             return {ok, data: dataRes, status};
         }
+        if (!model) {
+            return {ok, data: dataRes, status};
+        }
         return {ok, data: validateModel(dataRes, model), status};
     }
-    #post(path, data = {}, model = {}) {return this.modelParsedRequest(super.post, path, data, model)}
-    #get(path, data = {}, model = {}) {return this.modelParsedRequest(super.get, path, data, model)}
-    #put(path, data = {}, model = {}) {return this.modelParsedRequest(super.put, path, data, model)}
-    #delete(path, data = {}, model = {}) {return this.modelParsedRequest(super.delete, path, data, model)}
+    #post(path, data = {}, model = undefined) {return this.modelParsedRequest(super.post, path, data, model)}
+    #get(path, data = {}, model = undefined) {return this.modelParsedRequest(super.get, path, data, model)}
+    #put(path, data = {}, model = undefined) {return this.modelParsedRequest(super.put, path, data, model)}
+    #delete(path, data = {}, model = undefined) {return this.modelParsedRequest(super.delete, path, data, model)}
 }
