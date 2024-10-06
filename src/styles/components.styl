@@ -50,13 +50,19 @@ input()
     margin 0
     padding 5px 10px
     background colorBg
-    border colorBorder 1px solid
-    border-radius borderRadiusXS
+    border colorEmp21 1px solid
+    outline none
+    border-radius borderRadiusM
     color colorText2
     cursor text
     trans()
+    font-small()
     &:focus
-        border-color colorBg
-        color colorText1
+        border-color transparent
+        border-bottom-color colorEmp21
+        color colorEmp21
+        border-radius 0
     &::placeholder
-        color colorText4
+        color colorText5
+    &[disabled]
+        border none

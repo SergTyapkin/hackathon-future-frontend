@@ -13,7 +13,7 @@
   @media({mobile})
     width 100vw
   background colorEmp21
-  color colorTextEmp2
+  color colorTextEmp
   z-index 9999
   padding 50px
   .title

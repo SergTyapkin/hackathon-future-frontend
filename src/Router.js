@@ -30,10 +30,10 @@ export default function createVueRouter(Store) {
 
     let router_got_user = false;
     Router.beforeEach(async (to, from, next) => {
-        // if (!router_got_user) {
-        //     await Store.dispatch('GET_USER');
-        //     router_got_user = true;
-        // }
+        if (!router_got_user) {
+            await Store.dispatch('GET_USER');
+            router_got_user = true;
+        }
         //
         // const notLoginedRedirect = {
         //     name: 'login'

@@ -45,7 +45,7 @@
           gap 3px
           margin-top -20px
         .accent
-          color colorTextEmp2
+          color colorTextEmp
         &.contacts
           @media({mobile})
             margin-top -100px

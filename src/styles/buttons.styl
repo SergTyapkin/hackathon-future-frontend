@@ -12,7 +12,7 @@ button(
     color color-text
     font-medium()
     font-bold()
-    padding 10px 15px
+    padding 15px 20px
     border-radius borderRadiusM
     cursor pointer
     box-sizing border-box
@@ -37,14 +37,14 @@ button(
 button-fill()
     button(
         colorEmp16, colorTextLight1, colorEmp16,
-        colorEmp21, colorTextEmp2, colorEmp21,
-        mix(colorEmp11, colorBg, 50%), mix(colorTextEmp1, colorBg), colorEmp11
+        colorEmp21, colorTextEmp, colorEmp21,
+        mix(colorEmp11, colorBg, 50%), mix(colorTextLight1, colorBg), colorEmp11
     )
 button-fill-accent()
     button(
-        colorEmp21, colorTextEmp2, colorEmp21,
-        colorEmp11, colorTextEmp1, colorEmp11,
-        mix(colorEmp21, colorBg, 50%), mix(colorTextEmp2, colorBg), colorEmp21
+        colorEmp21, colorTextEmp, colorEmp21,
+        colorEmp16, colorTextLight1, colorEmp16,
+        mix(colorEmp21, colorBg, 50%), mix(colorTextEmp, colorBg), colorEmp21
     )
 button-link()
     button(
@@ -54,14 +54,14 @@ button-link()
     )
 button-danger()
     button(
-            mix(colorError, colorBg, 80%), colorText3, colorError,
-            mix(colorError, colorBg, 100%), colorText1, colorEmp1,
+            colorError, colorText3, colorError,
+            mix(colorError, colorBg, 80%), colorText1, colorEmp1,
             mix(colorError, colorBg, 20%), colorText5, colorBg
     )
-button-danger()
+button-success()
     button(
-            mix(colorSuccess, colorBg, 80%), colorText3, colorSuccess,
-            mix(colorSuccess, colorBg, 100%), colorText1, colorEmp1,
+            colorSuccess, colorText3, colorSuccess,
+            mix(colorSuccess, colorBg, 80%), colorText1, colorEmp1,
             mix(colorSuccess, colorBg, 20%), colorText5, colorBg
     )
 

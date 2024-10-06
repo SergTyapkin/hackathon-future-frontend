@@ -115,7 +115,7 @@
           </ul>
         </ViewPortWatcher>
 
-        <button class="button-join">Я в деле!</button>
+        <button class="button-join">Хочу участвовать в проекте!</button>
 
         <ViewPortWatcher on-ref="section-3-listing-2" v-model="isElementsVisible[3]" :bottom-offset="100" :top-offset="-200">
           <ul class="listing-numbers" ref="section-3-listing-2">

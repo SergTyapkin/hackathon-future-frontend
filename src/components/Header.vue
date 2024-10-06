@@ -42,6 +42,7 @@
   .profile
     button-fill()
     font-medium()
+    padding 10px 20px
     @media({mobile})
       font-small()
       padding 5px

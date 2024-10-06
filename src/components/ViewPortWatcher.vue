@@ -47,8 +47,8 @@ export default {
     }
   },
   mounted() {
-    console.log("ADD")
     this.targetElement.addEventListener('scroll', this.handleScroll);
+    this.handleScroll();
   },
   unmounted() {
     this.targetElement.removeEventListener('scroll', this.handleScroll);
