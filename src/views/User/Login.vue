@@ -1,61 +1,50 @@
 <style scoped lang="stylus">
 @require '../../styles/constants.styl'
 @require '../../styles/buttons.styl'
+@require '../../styles/components.styl'
 
 .root-signin
-  width 100%
-  padding 20px
-  .form
-    margin 20px auto
-    max-width 600px
-    background-color colorBg
-    border-radius borderRadiusM
-    padding 20px
-    padding-top 10px
-    text-align center
-    font-large()
-    font-bold()
-    color colorText1
-    .profile-link
-      text-decoration none
-      text-align left
-    .profile-button
+  .container-content
+    padding 80px
+    @media({mobile})
+      padding 80px 30px
+    max-width 700px
+    .title
+      font-large-extra()
+      font-bold()
+      margin-bottom 30px
+
+    .button-register
       button-link()
-    .signin-links
-      display flex
-      width 100%
-      margin-top 20px
-      font-small()
-      text-decoration none
-      justify-content space-between
-      .signin-by-email-link
-        color colorText1
-        text-decoration none
-      .restore-password-link
-        color colorText1
-        text-decoration none
+
+
+  .bg
+    position absolute
+    width 50%
+    left 50%
+    z-index -1
+    top 20%
+    transform rotate(180deg)
+
 </style>
 
 <template>
   <div class="root-signin">
-    <div class="form">
-      ВХОД<br>
+    <div class="container-content">
+      <div class="title">ВХОД</div>
+
       <FormWithErrors
         ref="form"
         :fields="fields"
-        submitText="Вход"
+        submitText="Отправить"
         @success="login"
         :loading="loading"
       ></FormWithErrors>
-      <router-link class="profile-link" :to="{name: 'register'}">
-        <button class="profile-button">Зарегистрироваться</button>
-      </router-link>
 
-<!--      <div class="signin-links">-->
-<!--        <router-link class="signin-by-email-link" :to="{name: 'signInByEmail'}">Войти по почте</router-link>-->
-<!--        <router-link class="restore-password-link" :to="{name: 'restorePassword'}">Восстановить пароль</router-link>-->
-<!--      </div>-->
+      <router-link class="button-register" :to="{name: 'register'}">Зарегистрироваться</router-link>
     </div>
+
+    <img src="../../../res/images/worm1.svg" alt="bg" class="bg">
   </div>
 </template>
 
@@ -75,7 +64,7 @@ export default {
           title: 'Электронная почта',
           name: 'email',
           type: 'text',
-          placeholder: 'legends@bmstu.ru',
+          placeholder: 'support@projector.ru',
           validationRegExp: Validators.email.regExp,
           prettifyResult: Validators.email.prettifyResult,
           autocomplete: 'email',

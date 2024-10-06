@@ -23,6 +23,8 @@
     </router-view>
   </div>
 
+  <Footer></Footer>
+
   <Popups ref="popups"></Popups>
   <Modals ref="modals"></Modals>
 </template>
@@ -83,10 +85,11 @@ import {Modals, Popups} from "@sergtyapkin/modals-popups";
 import API from "~/utils/API";
 import Header from "~/components/Header.vue";
 import SideMenu from "~/components/SideMenu.vue";
+import Footer from "~/components/Footer.vue";
 
 
 export default {
-  components: {SideMenu, Header, Modals, Popups },
+  components: {SideMenu, Header, Modals, Popups, Footer},
 
   data() {
     return {

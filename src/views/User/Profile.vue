@@ -8,12 +8,19 @@
 
 .root-profile
   padding 80px
+  @media({mobile})
+    padding 80px 20px
   .columns-container
     width 100%
     display flex
-    gap 40px
+    gap 60px
+    align-items stretch
+    justify-content center
+    @media({mobile})
+      flex-direction column
     .section
       flex 1
+      max-width 500px
       animation-opacity-slide-in(0, -50px)
       block-emp-1()
       padding 0
@@ -158,6 +165,11 @@
               <div class="field">О себе:</div>
               <textarea rows="3" class="data" v-model="$user.bio" :disabled="!isInEditData" placeholder="Пара слов о себе"></textarea>
             </div>
+
+            <div class="data-row">
+              <div class="field">Интересы:</div>
+            </div>
+            <TagsCloud v-model="$user.interests" :can-all="isInEditData" :limit="9"></TagsCloud>
           </div>
         </div>
       </section>
@@ -172,12 +184,13 @@ import FloatingButton from "~/components/FloatingButton.vue";
 import {Validators} from "~/utils/validators";
 import ImageDefaultAvatar from "~/../res/icons/profile.svg"
 import {UserRoles} from "~/utils/constants";
+import TagsCloud from "~/components/TagsCloud.vue";
 
 
 const DEFALUT_AVATAR_URL = ImageDefaultAvatar;
 
 export default {
-  components: { FloatingButton, Range, CircleLoading },
+  components: {TagsCloud, FloatingButton, Range, CircleLoading },
 
   data() {
     return {
@@ -203,7 +216,7 @@ export default {
         phone: this.$user.phone,
         // photoUrl: this.$user.photoUrl,
         interests: this.$user.interests,
-        info: this.$user.info,
+        bio: this.$user.bio,
       };
 
       if (! Validators.name.validate(newUserData.firstName)) {
@@ -232,7 +245,7 @@ export default {
       newUserData.lastName = Validators.name.prettifyResult(newUserData.lastName);
       newUserData.email = Validators.email.prettifyResult(newUserData.email);
       newUserData.phone = Validators.phone.prettifyResult(newUserData.phone);
-      newUserData.info = Validators.text.prettifyResult(newUserData.info);
+      newUserData.bio = Validators.text.prettifyResult(newUserData.bio);
 
       this.loading = true;
       const {ok} = await this.$api.editProfile(newUserData.firstName, newUserData.midName, newUserData.lastName, newUserData.interests, newUserData.email, newUserData.phone, newUserData.bio);
@@ -246,6 +259,10 @@ export default {
 
 
     async logout() {
+      if (!(await this.$modal.confirm("Вы действительно хотите выйти из аккаунта?"))) {
+        return;
+      }
+
       this.loading = true;
       const {ok} = await this.$api.logout();
       this.loading = true;

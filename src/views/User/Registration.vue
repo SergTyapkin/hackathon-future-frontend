@@ -2,44 +2,48 @@
 @require '../../styles/constants.styl'
 @require '../../styles/buttons.styl'
 
-bg = colorBgDark
+.root-signin
+  .container-content
+    padding 80px
+    @media({mobile})
+      padding 80px 30px
+    max-width 700px
+    .title
+      font-large-extra()
+      font-bold()
+      margin-bottom 30px
 
-.root-register
-  width 100%
-  padding 20px
-  .form
-    max-width 600px
-    margin 20px auto
-    background-color colorBg
-    border-radius borderRadiusM
-    padding 20px
-    padding-top 10px
-    text-align center
-    font-large()
-    font-bold()
-    color colorText1
-    .signin-link
-      text-align left
-      text-decoration none
-    .signin-button
+    .button-login
       button-link()
+
+
+  .bg
+    position absolute
+    width 50%
+    left 50%
+    z-index -1
+    top 20%
+    transform rotate(180deg)
+
 </style>
 
 <template>
-  <div class="root-register">
-    <div class="form">
-      РЕГИСТРАЦИЯ<br>
+  <div class="root-signin">
+    <div class="container-content">
+      <div class="title">ВХОД</div>
+
       <FormWithErrors
         ref="form"
         :fields="fields"
-        submitText="Зарегистрироваться"
+        submitText="Отправить"
         @success="register"
         :loading="loading"
       ></FormWithErrors>
-      <router-link class="signin-link" :to="{name: 'login'}">
-        <button class="signin-button">Войти</button>
-      </router-link>
+
+      <router-link class="button-login" :to="{name: 'login'}">Войти в аккаунт</router-link>
     </div>
+
+    <img src="../../../res/images/worm1.svg" alt="bg" class="bg">
   </div>
 </template>
 
@@ -55,49 +59,38 @@ export default {
   data() {
     return {
       fields: {
-        name: {
-          title: 'ФИО',
-          name: 'name',
+        firstname: {
+          title: 'Фамилия',
+          name: 'firstname',
           type: 'text',
-          placeholder: 'Иванов Иван Иванович',
+          placeholder: 'Иванов',
           validationRegExp: Validators.name.regExp,
           prettifyResult: Validators.name.prettifyResult,
-          autocomplete: 'name',
+          autocomplete: 'firstname',
         },
-        group: {
-          title: 'Учебная группа',
-          name: 'group',
+        midname: {
+          title: 'Имя',
+          name: 'midname',
           type: 'text',
-          placeholder: 'ОЭ2-11',
-          validationRegExp: Validators.group.regExp,
-          prettifyResult: Validators.group.prettifyResult,
-          autocomplete: 'group',
+          placeholder: 'Иван',
+          validationRegExp: Validators.name.regExp,
+          prettifyResult: Validators.name.prettifyResult,
+          autocomplete: 'midname',
         },
-        tg:{
-          title: 'Telegram',
-          name: 'telegram',
+        lastname: {
+          title: 'Отчество',
+          name: 'lastname',
           type: 'text',
-          placeholder: '@legends_bmstu',
-          validationRegExp: Validators.tg.regExp,
-          prettifyResult: Validators.tg.prettifyResult,
-          info: 'В любом формате',
-          autocomplete: 'telegram',
-        },
-        vk: {
-          title: 'VK',
-          name: 'vk',
-          type: 'text',
-          placeholder: 'vk.com/legends_bmstu',
-          validationRegExp: Validators.vk.regExp,
-          prettifyResult: Validators.vk.prettifyResult,
-          info: 'В любом формате',
-          autocomplete: 'vk',
+          placeholder: 'Иванович',
+          validationRegExp: Validators.name.regExp,
+          prettifyResult: Validators.name.prettifyResult,
+          autocomplete: 'lastname',
         },
         email: {
           title: 'Электронная почта',
           name: 'email',
           type: 'text',
-          placeholder: 'legends@bmstu.ru',
+          placeholder: 'support@projector.ru',
           validationRegExp: Validators.email.regExp,
           prettifyResult: Validators.email.prettifyResult,
           autocomplete: 'email',
@@ -142,16 +135,20 @@ export default {
       }
 
       this.loading = true;
-      const {ok} = await this.$api.register(data.name, data.group, data.tg, data.vk, data.email, data.phone, data.password, detectBrowser(), detectOS());
+      const {status, ok} = await this.$api.register(data.firstname, data.midname, data.lastname, data.email, data.phone, data.password, detectBrowser(), detectOS());
       this.loading = false;
 
-      if (!ok) {
+      if (status === 409) {
         this.$refs.form.setError([this.fields.email], 'На указанный email уже зарегестрирован аккаунт');
+        return;
+      }
+      if (!ok) {
+        this.$popups.error('Ошибка', 'Не удалось зарегистрироваться');
         return;
       }
       this.loading = true;
       await this.$store.dispatch('GET_USER');
-      this.loading = true;
+      this.loading = false;
       this.$router.push({name: 'profile'});
     }
   }

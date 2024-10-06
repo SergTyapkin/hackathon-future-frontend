@@ -127,17 +127,15 @@
       </section>
 
     </div>
-    <Footer></Footer>
   </div>
 </template>
 
 
 <script>
-import Footer from "~/components/Footer.vue";
 import ViewPortWatcher from "~/components/ViewPortWatcher.vue";
 
 export default {
-  components: {ViewPortWatcher, Footer},
+  components: {ViewPortWatcher},
 
   data() {
     return {

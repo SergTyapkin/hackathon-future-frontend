@@ -23,7 +23,7 @@ const Storage = new Vuex.Store({
       state.user.firstName = userData.firstName;
       state.user.midName = userData.midName;
       state.user.lastName = userData.lastName;
-      state.user.interests = userData.interests;
+      state.user.interests = userData.interests
       state.user.photoUrl = userData.photoUrl;
       state.user.email = userData.email;
       state.user.phone = userData.phone;
@@ -33,7 +33,6 @@ const Storage = new Vuex.Store({
       state.user.isSignedIn = true;
     },
     DELETE_USER(state) {
-      console.log("DELETE")
       state.user.isSignedIn = false;
     },
   },

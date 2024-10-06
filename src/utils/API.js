@@ -13,16 +13,16 @@ export default class MY_API extends REST_API {
             phone: '8-916-093-28-60',
             photo_url: '',
             role: 'activist',
-            interests: ['IT', 'Фронтенд', 'Спорт', 'Музыка'],
+            tags: ['IT', 'Фронтенд', 'Спорт', 'Музыка'],
             info: 'Светомузыкальный web-разработчик. Тгк: t.me/Serg_Self'
         }),
         status: 200,
         ok: true,
     }) //this.#get('/user', {_model: Models.User});
-    editProfile = (first_name, mid_name, last_name, interests, email, phone, bio) => this.#put('/user', {first_name, mid_name, last_name, interests, photo_url, email, phone, bio});
+    editProfile = (first_name, mid_name, last_name, interests, email, phone, bio) => this.#put('/user', {first_name, mid_name, last_name, interests, email, phone, bio});
     editAvatar = (photo_url) => this.#put('/user/avatar', {photo_url});
     login = (email, password, client_browser, client_os) => this.#post('/auth', {email, password, client_browser, client_os}, Models.User);
-    register = (first_name, mid_name, last_name, email, phone, client_browser, client_os) => this.#post('/auth/register', {first_name, mid_name, last_name, email, phone, client_browser, client_os}, Models.User);
+    register = (first_name, mid_name, last_name, email, phone, password, client_browser, client_os) => this.#post('/auth/register', {first_name, mid_name, last_name, email, phone, password, client_browser, client_os}, Models.User);
     logout = () => this.#delete('/auth');
 
     getUserById = (id) => this.#get(`/user`, {id});

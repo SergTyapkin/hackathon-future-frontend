@@ -15,7 +15,7 @@
   "dependencies": {
     "@sergtyapkin/modals-popups": "^1.1.1",
     "@sergtyapkin/models-validator": "^1.0.6",
-    "@sergtyapkin/rest-api": "^1.0.7",
+    "@sergtyapkin/rest-api": "^1.0.8",
     "@sergtyapkin/image-uploader": "^1.0.0",
     "@sergtyapkin/markdown": "^1.0.2",
     "@sergtyapkin/reconnecting-websocket": "^1.0.5",

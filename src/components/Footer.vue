@@ -9,6 +9,7 @@
   height calc(100vw / 1400 * 1015)
   width 100vw
   position relative
+  z-index -1
   .bg
     display block
     width 100%

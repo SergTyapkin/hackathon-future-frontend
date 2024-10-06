@@ -2,6 +2,7 @@
 @require '../styles/buttons.styl'
 @require '../styles/constants.styl'
 @require '../styles/fonts.styl'
+@require '../styles/components.styl'
 
 border-color = colorText1
 input-border = 2px solid border-color
@@ -9,11 +10,10 @@ input-border = 2px solid border-color
 .root-form
   .input-container
     position relative
-    padding-top 12px
+    padding-bottom 20px
 
     label
     .placeholder
-      position absolute
       top 22px
       left 10px
       text-align left
@@ -27,37 +27,9 @@ input-border = 2px solid border-color
       opacity 1
 
     input
-      all unset
-      box-sizing border-box
-      display block
+      input()
+      padding 15px 20px
       width 100%
-      border input-border
-      border-top-width 0
-      text-align left
-      padding-top 10px
-      padding-bottom 10px
-      padding-left 17px
-      border-radius borderRadiusL
-      outline input-border
-      outline-offset -2px
-      transition all 0.2s ease, background-size 0.1s ease
-      font-medium()
-      &::placeholder
-        opacity 0
-        visibility hidden
-      &:focus
-      &:not(:placeholder-shown)
-        outline-color transparent
-        outline-offset 5px
-      &:not(:placeholder-shown) ~ label
-      &:focus ~ label
-        left 15px
-        top 2px
-        opacity 0.3
-      &:not(:focus) ~ .placeholder
-      &:not(:placeholder-shown) ~ .placeholder
-        opacity 0
-        left 40px
 
     .error
     .success
@@ -93,18 +65,19 @@ input-border = 2px solid border-color
         opacity 1
 
   .submit
-    button-submit()
-    margin-top 10px
+    button-fill()
+    width 100%
+    margin-top 20px
     margin-bottom 10px
 </style>
 
 <template>
   <div class="root-form" @keydown.enter="submit" @input="() => {isSubmittedAlready ? checkFormat() : null}">
     <div class="input-container" v-for="[fieldName, field] in Object.entries(fields)" :class="{error: field.__error, success: field.__success}">
-      <input v-bind="field" :id="`${uid}-${fieldName}`" :type="field.type || 'text'" v-model="field.value" :autocomplete="field.autocomplete || 'off'" placeholder="-">
       <label :for="`${uid}-${fieldName}`">{{ field.title }}</label>
+      <input v-bind="field" :id="`${uid}-${fieldName}`" :type="field.type || 'text'" v-model="field.value" :autocomplete="field.autocomplete || 'off'" :placeholder="field.placeholder">
       <div class="info" v-if="field.info">{{ field.info }}</div>
-      <div class="placeholder">{{ field.placeholder }}</div>
+<!--      <div class="placeholder">{{ field.placeholder }}</div>-->
       <div class="error" :class="{hidden: !errorSuccessShowed}">{{ field.overrideErrorText || field.errorText || 'Неверный формат' }}</div>
       <div class="success" :class="{hidden: !errorSuccessShowed}">{{ field.successText || 'Успех' }}</div>
     </div>
