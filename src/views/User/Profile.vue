@@ -57,14 +57,15 @@
         border-radius 999999px
         background colorEmp23
         border 2px solid colorEmp21
-        min-width 80px
-        min-height 80px
+        min-width 100px
+        min-height 100px
         max-width 150px
         max-height 150px
         aspect-ratio 1/1
         overflow hidden
         centered-margin()
         margin-bottom 40px
+        position relative
         img
           width 100%
           height 100%
@@ -122,7 +123,15 @@
           <header class="subtitle">{{ UserRoles[$user.role] }} ID{{ $user.id }}</header>
 
           <div class="avatar-container">
-            <img class="avatar" :src="$user.photoUrl || DEFALUT_AVATAR_URL" alt="avatar">
+            <CircleLoading v-if="loading"></CircleLoading>
+            <DragNDropLoader v-else class="image-loader" @load="updateAvatar"
+                             :crop-size="cropSize"
+                             :compress-size="compressSize"
+            >
+              <div class="avatar-div" @click.stop="updateAvatar(undefined)">
+                <img class="avatar" :src="$user.photoUrl || DEFALUT_AVATAR_URL" alt="avatar">
+              </div>
+            </DragNDropLoader>
           </div>
 
           <div class="data-rows">
@@ -183,14 +192,15 @@ import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import FloatingButton from "~/components/FloatingButton.vue";
 import {Validators} from "~/utils/validators";
 import ImageDefaultAvatar from "~/../res/icons/profile.svg"
-import {UserRoles} from "~/utils/constants";
+import {IMAGE_MAX_RES, IMAGE_PROFILE_MAX_RES, UserRoles} from "~/utils/constants";
 import TagsCloud from "~/components/TagsCloud.vue";
+import DragNDropLoader from "~/components/DragNDropLoader.vue";
 
 
 const DEFALUT_AVATAR_URL = ImageDefaultAvatar;
 
 export default {
-  components: {TagsCloud, FloatingButton, Range, CircleLoading },
+  components: {DragNDropLoader, TagsCloud, FloatingButton, Range, CircleLoading },
 
   data() {
     return {
@@ -198,6 +208,8 @@ export default {
       isInEditData: false,
       isEdited: false,
 
+      cropSize: IMAGE_PROFILE_MAX_RES,
+      compressSize: IMAGE_MAX_RES,
       DEFALUT_AVATAR_URL,
       UserRoles,
     }
@@ -255,6 +267,18 @@ export default {
         return;
       }
       this.$store.dispatch('GET_USER');
+    },
+
+    async updateAvatar(dataURL) {
+      this.loading = true;
+      const {ok} = await this.$api.editAvatar(dataURL);
+      this.loading = false;
+      if (!ok) {
+        this.$popups.error('Не получилось загрузить картинку', 'Неизвестная ошибка');
+        return;
+      }
+
+      this.$user.photoUrl = dataURL;
     },
 
 
