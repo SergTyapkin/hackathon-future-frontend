@@ -101,17 +101,25 @@
         .button-exit
         .button-edit
         .button-save
+        .button-cancel
           flex 1
           button-fill-accent()
           padding 10px 20px
           centered-margin()
           svg-inside(20px)
+          @media({mobile})
+            font-size 0
 
+        .button-cancel
         .button-exit
           flex 0
           button-danger()
+          @media({mobile})
+            font-size 0
           img
             transform rotate(180deg)
+        .button-cancel
+          background none
 </style>
 
 <template>
@@ -119,8 +127,8 @@
     <div class="columns-container" @input="setEdited">
       <section class="section main-data __animation-started" style="--animation-index: 0">
         <div class="bg">
-          <header class="title">{{ $user.firstName }} {{ $user.midName }}</header>
-          <header class="subtitle">{{ UserRoles[$user.role] }} ID{{ $user.id }}</header>
+          <header class="title">{{ curUserData.firstName }} {{ curUserData.midName }}</header>
+          <header class="subtitle">{{ UserRoles[curUserData.role] }} ID{{ curUserData.id }}</header>
 
           <div class="avatar-container">
             <CircleLoading v-if="loading"></CircleLoading>
@@ -129,7 +137,7 @@
                              :compress-size="compressSize"
             >
               <div class="avatar-div" @click.stop="updateAvatar(undefined)">
-                <img class="avatar" :src="$user.photoUrl || DEFALUT_AVATAR_URL" alt="avatar">
+                <img class="avatar" :src="curUserData.photoUrl || DEFALUT_AVATAR_URL" alt="avatar">
               </div>
             </DragNDropLoader>
           </div>
@@ -137,20 +145,21 @@
           <div class="data-rows">
             <div class="data-row">
               <div class="field">Имя:</div>
-              <input class="data" v-model="$user.firstName" :disabled="!isInEditData" placeholder="Ввше имя">
+              <input class="data" v-model="curUserData.firstName" :disabled="!isInEditData" placeholder="Ввше имя">
             </div>
             <div class="data-row">
               <div class="field">Фамилия:</div>
-              <input class="data" v-model="$user.midName" :disabled="!isInEditData" placeholder="Ввша фимилия">
+              <input class="data" v-model="curUserData.midName" :disabled="!isInEditData" placeholder="Ввша фимилия">
             </div>
             <div class="data-row">
               <div class="field">Отчество:</div>
-              <input class="data" v-model="$user.lastName" :disabled="!isInEditData" placeholder="Ввше отчество">
+              <input class="data" v-model="curUserData.lastName" :disabled="!isInEditData" placeholder="Ввше отчество">
             </div>
           </div>
 
           <div class="buttons-container">
-            <button class="button-exit" @click="logout"><img src="../../../res/icons/exit_to_app.svg" alt="logout"></button>
+            <button v-if="!isInEditData" class="button-exit" @click="logout"><img src="../../../res/icons/exit_to_app.svg" alt="logout"></button>
+            <button v-else class="button-cancel" @click="setNotEdited"><img src="../../../res/icons/cross.svg" alt="edit">Отмена</button>
 
             <button v-if="!isInEditData" class="button-edit" @click="isInEditData = true"><img src="../../../res/icons/edit.svg" alt="edit">Изменить</button>
             <button v-else class="button-save" @click="saveUserData"><img src="../../../res/icons/save.svg" alt="edit">Сохранить</button>
@@ -164,21 +173,21 @@
           <div class="data-rows">
             <div class="data-row">
               <div class="field">Email:</div>
-              <input class="data" v-model="$user.email" :disabled="!isInEditData" placeholder="Ваш email">
+              <input class="data" v-model="curUserData.email" :disabled="!isInEditData" placeholder="Ваш email">
             </div>
             <div class="data-row">
               <div class="field">Телефон:</div>
-              <input class="data" v-model="$user.phone" :disabled="!isInEditData" placeholder="Ваш телефон">
+              <input class="data" v-model="curUserData.phone" :disabled="!isInEditData" placeholder="Ваш телефон">
             </div>
             <div class="data-row">
               <div class="field">О себе:</div>
-              <textarea rows="3" class="data" v-model="$user.bio" :disabled="!isInEditData" placeholder="Пара слов о себе"></textarea>
+              <textarea rows="3" class="data" v-model="curUserData.bio" :disabled="!isInEditData" placeholder="Пара слов о себе"></textarea>
             </div>
 
             <div class="data-row">
               <div class="field">Интересы:</div>
             </div>
-            <TagsCloud v-model="$user.interests" :can-all="isInEditData" :limit="9"></TagsCloud>
+            <TagsCloud v-model="curUserData.interests" :can-all="isInEditData" :limit="9"></TagsCloud>
           </div>
         </div>
       </section>
@@ -206,7 +215,7 @@ export default {
     return {
       loading: false,
       isInEditData: false,
-      isEdited: false,
+      curUserData: {},
 
       cropSize: IMAGE_PROFILE_MAX_RES,
       compressSize: IMAGE_MAX_RES,
@@ -216,9 +225,22 @@ export default {
   },
 
   async mounted() {
+    this.copyFieldsFrom$User()
   },
 
   methods: {
+    copyFieldsFrom$User() {
+      this.curUserData.id = this.$user.id;
+      this.curUserData.firstName = this.$user.firstName;
+      this.curUserData.midName = this.$user.midName;
+      this.curUserData.lastName = this.$user.lastName;
+      this.curUserData.email = this.$user.email;
+      this.curUserData.phone = this.$user.phone;
+      this.curUserData.bio = this.$user.bio;
+      this.curUserData.role = this.$user.role;
+      this.curUserData.interests = structuredClone(this.$user.interests);
+    },
+
     async saveUserData() {
       const newUserData = {
         firstName: this.$user.firstName,
@@ -301,6 +323,12 @@ export default {
 
     setEdited() {
       window.onbeforeunload = (e) => {e.preventDefault(); e.returnValue = '';};
+      this.isInEditData = true;
+    },
+    setNotEdited() {
+      this.copyFieldsFrom$User();
+      window.onbeforeunload = () => {};
+      this.isInEditData = false;
     }
   },
 }

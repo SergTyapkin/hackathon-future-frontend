@@ -3,6 +3,7 @@
 
 .wrapper
   width 100%
+  height 100%
   min-height 'calc(100vh - %s)' % headerHeight
 
   > *
@@ -18,12 +19,15 @@
   <div class="wrapper">
     <router-view v-slot="{ Component }">
       <transition name="scale-in">
+      <div :key="Component">
         <component :is="Component"/>
+        <Footer></Footer>
+      </div>
       </transition>
     </router-view>
   </div>
 
-  <Footer></Footer>
+
 
   <Popups ref="popups"></Popups>
   <Modals ref="modals"></Modals>
