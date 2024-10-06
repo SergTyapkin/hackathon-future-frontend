@@ -10,7 +10,7 @@
     border-radius(50%)
     overflow hidden
     font-family Arial
-    padding-left 5px
+    padding-left 10px
     font-size 15px
     text-align center
     display flex
@@ -44,7 +44,6 @@
      @drop.prevent="handleDrop"
      @click="getUserImage"
   >
-    <div></div>
     <slot></slot>
   </div>
 </template>

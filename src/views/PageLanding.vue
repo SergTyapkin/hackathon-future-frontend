@@ -28,6 +28,7 @@
       margin-bottom 100px
 
     .button-join
+      width min-content
       button-fill-accent()
 
     ul.listing-numbers
@@ -81,9 +82,9 @@
           </ul>
         </ViewPortWatcher>
 
-        <button class="button-join">Присоединиться</button>
+        <router-link :to="{name: 'register'}" class="button-join">Присоединиться</router-link>
 
-        <img src="../../res/images/worm1.svg" alt="bg" class="bg-image">
+        <img src="../../res/images/worm21.svg" alt="bg" class="bg-image">
       </section>
 
 
@@ -115,7 +116,7 @@
           </ul>
         </ViewPortWatcher>
 
-        <button class="button-join">Хочу участвовать в проекте!</button>
+        <router-link :to="{name: 'register'}" class="button-join">Хочу участвовать в проекте!</router-link>
 
         <ViewPortWatcher on-ref="section-3-listing-2" v-model="isElementsVisible[3]" :bottom-offset="100" :top-offset="-200">
           <ul class="listing-numbers" ref="section-3-listing-2">

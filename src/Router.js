@@ -7,18 +7,17 @@ import ChangePassword from "~/views/User/ChangePassword.vue";
 import Page404 from "~/views/Page404.vue";
 import RestorePassword from "~/views/User/RestorePassword.vue";
 import PageLanding from "~/views/PageLanding.vue";
+import PageMainWorkspace from "~/views/PageMainWorkspace.vue";
 
 export default function createVueRouter(Store) {
     const routes = [
-        {path: '/', name: 'default', component: PageLanding, meta: {noLoginRequired: true}},
+        {path: '/', name: 'default', component: PageLanding},
 
         {path: '/register', name: 'register', component: Registration, meta: {noLoginRequired: true}},
         {path: '/login', name: 'login', component: Login, meta: {noLoginRequired: true}},
-        {path: '/login/email', name: 'signInByEmail', component: Login, meta: {noLoginRequired: true}},
         {path: '/profile', name: 'profile', component: Profile, meta: {loginRequired: true}},
-        {path: '/password/change', name: 'changePassword', component: ChangePassword, meta: {loginRequired: true}},
-        {path: '/password/restore', name: 'restorePassword', component: RestorePassword, meta: {noLoginRequired: true}},
-        // {path: '/admin', name: 'admin', component: Admin, meta: {adminRequired: true}},
+
+        {path: '/main', name: 'main', component: PageMainWorkspace, meta: {loginRequired: true}},
 
         {path: '/:pathMatch(.*)*', name: 'page404', component: Page404},
     ];
@@ -34,47 +33,42 @@ export default function createVueRouter(Store) {
             await Store.dispatch('GET_USER');
             router_got_user = true;
         }
-        //
-        // const notLoginedRedirect = {
-        //     name: 'login'
-        // }
-        // const loginedRedirect = {
-        //     name: 'profile',
-        // }
-        //
-        // if (to.path === '/' || to.path === '') {
-        //     if (Store.state.user.isSignedIn) {
-        //         next(loginedRedirect);
-        //         return;
-        //     }
-        //     next(notLoginedRedirect);
-        //     return;
-        // }
-        //
-        // // Login required redirects
-        // if (to.matched.some(record => record.meta.loginRequired === true || record.meta.adminRequired === true)) {
-        //     if (Store.state.user.isSignedIn) {
-        //         next();
-        //         return;
-        //     }
-        //     next(notLoginedRedirect);
-        //     return;
-        // } else if (to.matched.some(record => record.meta.noLoginRequired === true)) {
-        //     if (!Store.state.user.isSignedIn) {
-        //         next();
-        //         return;
-        //     }
-        //     next(loginedRedirect);
-        //     return;
-        // }
-        // if (to.matched.some(record => record.meta.adminRequired === true)) {
-        //     if (Store.state.user.isAdmin) {
-        //         next();
-        //         return;
-        //     }
-        //     next(loginedRedirect);
-        //     return;
-        // }
+
+        const notLoginedRedirect = {
+            name: 'login'
+        }
+        const loginedRedirect = {
+            name: 'profile',
+        }
+        const mainWorkingPage = {
+            name: 'main',
+        }
+
+        if (to.path === '/' || to.path === '') {
+            if (Store.state.user.isSignedIn) {
+                next(mainWorkingPage);
+                return;
+            }
+            // next(notLoginedRedirect);
+            // return;
+        }
+
+        // Login required redirects
+        if (to.matched.some(record => record.meta.loginRequired === true)) {
+            if (Store.state.user.isSignedIn) {
+                next();
+                return;
+            }
+            next(notLoginedRedirect);
+            return;
+        } else if (to.matched.some(record => record.meta.noLoginRequired === true)) {
+            if (!Store.state.user.isSignedIn) {
+                next();
+                return;
+            }
+            next(loginedRedirect);
+            return;
+        }
         next();
     });
 

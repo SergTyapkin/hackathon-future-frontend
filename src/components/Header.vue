@@ -46,6 +46,16 @@
     @media({mobile})
       font-small()
       padding 5px
+    img
+      width 25px
+      height 25px
+      border-radius 9999px
+      border 2px solid colorEmp21
+      margin-right 10px
+      background colorEmp21
+      @media({mobile})
+        max-width 0
+        border none
 </style>
 
 <template>
@@ -54,13 +64,23 @@
     <router-link class="link" :to="{name: 'profile'}">Проекты</router-link>
     <router-link class="link" :to="{name: 'profile'}">Новости</router-link>
     <router-link class="link" :to="{name: 'profile'}">Гос. Проекты</router-link>
-    <router-link class="link profile" :to="{name: 'profile'}">Профиль ></router-link>
+
+    <router-link v-if="$store.state.user.isSignedIn" class="link profile" :to="{name: 'profile'}"><img :src="$user.photoUrl || DEFAULT_AVATAR_URL" alt="avatar">{{ $user.midName }} ></router-link>
+    <router-link v-else class="link profile" :to="{name: 'login'}">Войти ></router-link>
   </header>
 </template>
 
 <script>
+import {DEFAULT_AVATAR_URL} from "~/utils/constants";
+
 export default {
   props: {
+  },
+
+  data() {
+    return {
+      DEFAULT_AVATAR_URL,
+    }
   },
 
   mounted() {

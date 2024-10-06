@@ -44,7 +44,7 @@
       <router-link class="button-register" :to="{name: 'register'}">Зарегистрироваться</router-link>
     </div>
 
-    <img src="../../../res/images/worm1.svg" alt="bg" class="bg">
+    <img src="../../../res/images/worm21.svg" alt="bg" class="bg">
   </div>
 </template>
 

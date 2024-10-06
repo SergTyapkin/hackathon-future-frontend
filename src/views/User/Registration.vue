@@ -30,7 +30,7 @@
 <template>
   <div class="root-signin">
     <div class="container-content">
-      <div class="title">ВХОД</div>
+      <div class="title">РЕГИСТРАЦИЯ</div>
 
       <FormWithErrors
         ref="form"
@@ -43,7 +43,7 @@
       <router-link class="button-login" :to="{name: 'login'}">Войти в аккаунт</router-link>
     </div>
 
-    <img src="../../../res/images/worm1.svg" alt="bg" class="bg">
+    <img src="../../../res/images/worm21.svg" alt="bg" class="bg">
   </div>
 </template>
 

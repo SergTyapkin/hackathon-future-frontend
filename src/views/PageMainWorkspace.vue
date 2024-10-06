@@ -1,10 +1,11 @@
 <style lang="stylus" scoped>
-@require '../../styles/constants.styl'
-@require '../../styles/buttons.styl'
-@require '../../styles/fonts.styl'
-@require '../../styles/utils.styl'
-@require '../../styles/components.styl'
-@require '../../styles/animations.styl'
+@require '../styles/constants.styl'
+@require '../styles/buttons.styl'
+@require '../styles/fonts.styl'
+@require '../styles/utils.styl'
+@require '../styles/components.styl'
+@require '../styles/animations.styl'
+
 
 .root-profile
   padding 80px
@@ -34,7 +35,7 @@
         color colorText1
         font-medium()
     .section.side-data
-      block-emp-2(-15px, -15px)
+      block-emp-2()
       padding 0
       .bg
         background colorBg
@@ -53,24 +54,22 @@
         text-align center
         margin-bottom 15px
 
-      .avatar-container
-        border-radius 999999px
-        background colorEmp23
-        border 2px solid colorEmp21
-        min-width 100px
-        min-height 100px
-        max-width 150px
-        max-height 150px
+      .image-loader
         width 100%
         height 100%
-        aspect-ratio 1/1
-        overflow hidden
-        centered-margin()
-        margin-bottom 40px
-        position relative
-        .image-loader
-          width 100%
-          height 100%
+        .avatar-container
+          border-radius 999999px
+          background colorEmp23
+          border 2px solid colorEmp21
+          min-width 100px
+          min-height 100px
+          max-width 150px
+          max-height 150px
+          aspect-ratio 1/1
+          overflow hidden
+          centered-margin()
+          margin-bottom 40px
+          position relative
           img
             width 100%
             height 100%
@@ -141,7 +140,9 @@
                              :crop-size="cropSize"
                              :compress-size="compressSize"
             >
-              <img class="avatar" :src="$user.photoUrl || DEFAULT_AVATAR_URL" alt="avatar">
+              <div class="avatar-div" @click.stop="updateAvatar(undefined)">
+                <img class="avatar" :src="curUserData.photoUrl || DEFALUT_AVATAR_URL" alt="avatar">
+              </div>
             </DragNDropLoader>
           </div>
 
@@ -171,7 +172,7 @@
       </section>
 
 
-      <section class="section side-data __animation-started" style="--animation-index: 1">
+      <section class="section side-data __animation-started" style="--animation-index: 0">
         <div class="bg">
           <div class="data-rows">
             <div class="data-row">
@@ -184,7 +185,7 @@
             </div>
             <div class="data-row">
               <div class="field">О себе:</div>
-              <textarea rows="4" class="data" v-model="curUserData.bio" :disabled="!isInEditData" placeholder="Пара слов о себе"></textarea>
+              <textarea rows="3" class="data" v-model="curUserData.bio" :disabled="!isInEditData" placeholder="Пара слов о себе"></textarea>
             </div>
 
             <div class="data-row">
@@ -203,10 +204,13 @@
 import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import FloatingButton from "~/components/FloatingButton.vue";
 import {Validators} from "~/utils/validators";
-import {DEFAULT_AVATAR_URL, IMAGE_MAX_RES, IMAGE_PROFILE_MAX_RES, UserRoles} from "~/utils/constants";
+import ImageDefaultAvatar from "~/../res/icons/profile.svg"
+import {IMAGE_MAX_RES, IMAGE_PROFILE_MAX_RES, UserRoles} from "~/utils/constants";
 import TagsCloud from "~/components/TagsCloud.vue";
 import DragNDropLoader from "~/components/DragNDropLoader.vue";
 
+
+const DEFALUT_AVATAR_URL = ImageDefaultAvatar;
 
 export default {
   components: {DragNDropLoader, TagsCloud, FloatingButton, Range, CircleLoading },
@@ -219,7 +223,7 @@ export default {
 
       cropSize: IMAGE_PROFILE_MAX_RES,
       compressSize: IMAGE_MAX_RES,
-      DEFAULT_AVATAR_URL,
+      DEFALUT_AVATAR_URL,
       UserRoles,
     }
   },

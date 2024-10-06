@@ -3,22 +3,7 @@ import validateModel from "@sergtyapkin/models-validator";
 import * as Models from "~/utils/apiModels";
 
 export default class MY_API extends REST_API {
-    getUser = () => ({
-        data: validateModel(Models.User, {
-            id: '418-05',
-            first_name: 'Тяпкин',
-            mid_name: 'Сергей',
-            last_name: 'Сергеевич',
-            email: 'tapkin2002@mail.ru',
-            phone: '8-916-093-28-60',
-            photo_url: '',
-            role: 'activist',
-            tags: ['IT', 'Фронтенд', 'Спорт', 'Музыка'],
-            info: 'Светомузыкальный web-разработчик. Тгк: t.me/Serg_Self'
-        }),
-        status: 200,
-        ok: true,
-    }) //this.#get('/user', {_model: Models.User});
+    getUser = () => this.#get('/user', {_model: Models.User});
     editProfile = (first_name, mid_name, last_name, interests, email, phone, bio) => this.#put('/user', {first_name, mid_name, last_name, interests, email, phone, bio});
     editAvatar = (photo_url) => this.#put('/user/avatar', {photo_url});
     login = (email, password, client_browser, client_os) => this.#post('/auth', {email, password, client_browser, client_os}, Models.User);
