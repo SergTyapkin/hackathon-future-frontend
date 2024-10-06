@@ -15,7 +15,6 @@
       display flex
       justify-content stretch
       align-items stretch
-      width min-content
       border-radius 999999px
       border 2px solid colorEmp11
       .input
@@ -23,7 +22,6 @@
         font-small-extra()
         padding 5px 10px
         overflow hidden
-        width min-content
         text-align center
       .button-delete
       .button-add
@@ -53,12 +51,12 @@
   <div class="root-tags-cloud">
     <div class="tags-container">
       <div v-if="(canAdd || canAll) && (limit === undefined || modelValue.length < limit)" class="adding-container">
-        <input class="input" v-model="newTagText" :class="{visible: isInputFocused}" ref="input" @focus="isInputFocused = true" @blur="onBlurInput" @keydown.enter="onBlurInput">
+        <input class="input" :size="newTagText.length + 1" maxlength="30" v-model="newTagText" :class="{visible: isInputFocused}" ref="input" @focus="isInputFocused = true" @blur="onBlurInput" @keydown.enter="onBlurInput">
         <button class="button-add" @click="onClickOnAddButton"><img src="../../res/icons/plus.svg" alt="plus"></button>
       </div>
 
       <div v-for="(tag, idx) in modelValue" class="tag-container">
-        <input class="input" v-model="modelValue[idx]" :disabled="!(canEdit || canAll)">
+        <input class="input" :size="tag.length + 1" maxlength="30" v-model="modelValue[idx]" :disabled="!(canEdit || canAll)">
         <button v-if="canDelete || canAll" class="button-delete" @click="deleteItem(idx)"><img src="../../res/icons/trashbox.svg" alt="delete"></button>
       </div>
     </div>

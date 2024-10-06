@@ -52,4 +52,57 @@ export const Project = {
     from: 'url_for_preview'
   },
   format: String,
+  rating: {
+    type: Number,
+    optional: true,
+  }
+}
+
+export const ProjectsList = {
+  projects: {
+    type: Array,
+    item: {
+      type: Object,
+      fields: Project,
+    }
+  }
+}
+
+
+export const Feed = {
+  id: String,
+  title: String,
+  contents: String,
+  tags: {
+    type: Array,
+    item: String,
+    optional: true,
+    default: [],
+  },
+  authorId: {
+    type: String,
+    from: 'author_id',
+  },
+  authorName: {
+    type: String,
+    from: 'author_name',
+  },
+  previewUrl: {
+    type: String,
+    from: 'preview_url'
+  },
+  rating: {
+    type: Number,
+    optional: true,
+  },
+}
+
+export const FeedsList = {
+  feeds: {
+    type: Array,
+    item: {
+      type: Object,
+      fields: Feed,
+    }
+  }
 }

@@ -9,25 +9,43 @@
 
 .root-main-workspace
   padding 80px
+  @media({mobile})
+    padding 40px
 
-  .title
-    text-transform uppercase
-    font-large-extra()
+  .loading
+    centered-absolute-transform()
+    top headerHeight
+
+  .section
+    margin-bottom 100px
+    .title
+      text-transform uppercase
+      font-large-extra()
+      margin-bottom 20px
+
+  .bg
+    position absolute
+    top 35%
+    left 0
+    width 100%
+    z-index -1
 </style>
 
 <template>
   <div class="root-main-workspace">
-    <section>
+    <CircleLoading v-if="loading" class="loading"></CircleLoading>
+
+    <section class="section">
       <header class="title">Мои проекты</header>
       <ProjectsList :list="projectsList"></ProjectsList>
     </section>
 
-    <section>
+    <section class="section">
       <header class="title">Новости</header>
-<!--      <NewsList :list="newsList"></NewsList>-->
+      <NewsList :list="newsList"></NewsList>
     </section>
 
-    <div class="bg"></div>
+    <div class="bg"><img src="../../res/images/worm11.svg" alt="bg"></div>
   </div>
 </template>
 
@@ -37,10 +55,11 @@ import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import TagsCloud from "~/components/TagsCloud.vue";
 import DragNDropLoader from "~/components/DragNDropLoader.vue";
 import ProjectsList from "~/components/ProjectsList.vue";
+import NewsList from "~/components/NewsList.vue";
 
 
 export default {
-  components: {ProjectsList, DragNDropLoader, TagsCloud, CircleLoading},
+  components: {NewsList, ProjectsList, DragNDropLoader, TagsCloud, CircleLoading},
 
   data() {
     return {
@@ -51,10 +70,37 @@ export default {
     }
   },
 
-  async mounted() {
+  mounted() {
+    this.getProjects();
+    this.getNews();
   },
 
   methods: {
+    async getProjects() {
+      this.loading = true;
+      const {data, ok} = await this.$api.getMyProjects();
+      this.loading = false;
+
+      if (!ok) {
+        this.$popups.error('Ошибка', 'Не удалось получить список проектов');
+        return;
+      }
+
+      this.projectsList = data.projects;
+    },
+
+    async getNews() {
+      this.loading = true;
+      const {data, ok} = await this.$api.getFeeds();
+      this.loading = false;
+
+      if (!ok) {
+        this.$popups.error('Ошибка', 'Не удалось получить список новостей');
+        return;
+      }
+
+      this.newsList = data.feeds;
+    }
   },
 }
 </script>

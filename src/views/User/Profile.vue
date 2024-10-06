@@ -22,8 +22,11 @@
       flex 1
       max-width 500px
       animation-opacity-slide-in(0, -50px)
-      block-emp-1()
+      block-emp-1(15px, 15px)
       padding 0
+      @media({mobile})
+        block-emp-1(8px, 8px)
+        padding 0
       .bg
         border colorEmp16 5px solid
         background colorBg
@@ -36,6 +39,9 @@
     .section.side-data
       block-emp-2(-15px, -15px)
       padding 0
+      @media({mobile})
+        block-emp-2(8px, 8px)
+        padding 0
       .bg
         background colorBg
         border colorEmp21 5px solid
@@ -310,7 +316,7 @@ export default {
 
       this.loading = true;
       const {ok} = await this.$api.logout();
-      this.loading = true;
+      this.loading = false;
 
       if (!ok) {
         this.$popups.error('Не получилось выйти из аккаунта', 'Неизвестная ошибка');
@@ -326,7 +332,7 @@ export default {
     },
     setNotEdited() {
       this.copyFieldsFrom$User();
-      window.onbeforeunload = () => {};
+      window.onbeforeunload = null;
       this.isInEditData = false;
     }
   },

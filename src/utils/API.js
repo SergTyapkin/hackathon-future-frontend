@@ -10,7 +10,115 @@ export default class MY_API extends REST_API {
     register = (first_name, mid_name, last_name, email, phone, password, client_browser, client_os) => this.#post('/auth/register', {first_name, mid_name, last_name, email, phone, password, client_browser, client_os});
     logout = () => this.#delete('/auth');
 
-    getUserById = (id) => this.#get(`/user`, {id});
+    getMyProjects = () => ({
+        data: validateModel(Models.ProjectsList, {
+            projects: [
+                {
+                    id: '41-655',
+                    title: 'Строим коммунизм',
+                    goals: 'Воскресить Ленина, Победить мировую буржуазию',
+                    tags: ['Красный', 'Синий', 'Жёлтый'],
+                    region: 'Москва',
+                    url_for_preview: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                    format: 'Очно',
+                },
+                {
+                    id: '50-61',
+                    title: 'Уничтожаем коммунизм',
+                    goals: 'Убить Ленина, Возродить мировую буржуазию',
+                    tags: ['Красный', 'Синий', 'Жёлтый'],
+                    region: 'Москва',
+                    url_for_preview: 'https://avatars.mds.yandex.net/i?id=76f28736e27e47fb267124ecba089052db0f203d-12521952-images-thumbs&n=13',
+                    format: 'Очно',
+                },
+                {
+                    id: '50-61',
+                    title: 'Уничтожаем коммунизм',
+                    goals: 'Убить Ленина, Возродить мировую буржуазию',
+                    tags: ['Красный', 'Синий', 'Жёлтый'],
+                    region: 'Москва',
+                    url_for_preview: 'https://avatars.mds.yandex.net/i?id=76f28736e27e47fb267124ecba089052db0f203d-12521952-images-thumbs&n=13',
+                    format: 'Очно',
+                },
+            ]
+        }),
+        status: 200,
+        ok: true,
+    }) //this.#get('/project/my', undefined, Models.ProjectsList);
+
+    getFeeds = () => ({
+        data: validateModel(Models.FeedsList, {
+            feeds: [
+                {
+                    id: '41-655',
+                    title: 'Строим коммунизм',
+                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
+                    tags: ['Красный', 'Синий', 'Жёлтый'],
+                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                    author_id: '423-23',
+                    author_name: 'Олег Петров',
+                },
+                {
+                    id: '4231-655',
+                    title: 'Рушим коммунизм',
+                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
+                    tags: ['Красный', 'Синий', 'Жёлтый'],
+                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                    author_id: '423-23',
+                    author_name: 'Евгения Завалишина',
+                },
+                {
+                    id: '41-6552',
+                    title: 'Помогите он сломался',
+                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
+                    tags: ['Красный', 'Синий', 'Жёлтый'],
+                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                    author_id: '423-23',
+                    author_name: 'Олег Иванов',
+                },
+                {
+                    id: '41-6552',
+                    title: 'Помогите он сломался',
+                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
+                    tags: ['Красный', 'Синий', 'Жёлтый'],
+                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                    author_id: '423-23',
+                    author_name: 'Олег Иванов',
+                },
+                {
+                    id: '41-6552',
+                    title: 'Помогите он сломался',
+                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
+                    tags: ['Красный', 'Синий', 'Жёлтый'],
+                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                    author_id: '423-23',
+                    author_name: 'Олег Иванов',
+                },
+                {
+                    id: '41-6552',
+                    title: 'Помогите он сломался',
+                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
+                    tags: ['Красный', 'Синий', 'Жёлтый'],
+                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                    author_id: '423-23',
+                    author_name: 'Олег Иванов',
+                },
+                {
+                    id: '41-6552',
+                    title: 'Помогите он сломался',
+                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
+                    tags: ['Красный', 'Синий', 'Жёлтый'],
+                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                    author_id: '423-23',
+                    author_name: 'Олег Иванов',
+                },
+            ]
+        }),
+        status: 200,
+        ok: true,
+    }) //this.#get(`/feed`, undefined, Models.FeedsList);
+
+    getUserById = (id) => this.#get(`/user`, {id}, Models.User);
     sendConfirmationLetter = (name, email) => this.#post('/email/confirm', {name, email});
     confirmEmailByCode = (secretCode) => this.#put('/user/email/confirm', {secretCode});
     changePassword = (oldPassword, newPassword) => this.#put('/user/password', {oldPassword, newPassword});
