@@ -23,7 +23,7 @@ export default function createVueRouter(Store) {
         {path: '/profile', name: 'profile', component: Profile, meta: {loginRequired: true}},
 
         {path: '/main', name: 'main', component: PageMainWorkspace, meta: {loginRequired: true}},
-        {path: '/projects', name: 'allProjects', component: PageAllProjects, meta: {loginRequired: true}},
+        {path: '/projects', name: 'allProjects', component: PageAllProjects},
         {path: '/feeds', name: 'allFeeds', component: PageAllFeeds},
         {path: '/gos-programs', name: 'gosPrograms', component: PageAllGosPrograms},
         {path: '/project/:id', name: 'project', component: PageProject, meta: {loginRequired: true}},

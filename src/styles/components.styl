@@ -30,11 +30,15 @@ block-emp-1(xDiff=20px, yDiff=20px)
         border-radius inherit
         z-index -1
         trans()
+        @media({mobile})
+            inset (max(yDiff / 2, 6px)) (max(xDiff / 2, 6px)) (min(- yDiff / 2, -6px)) (min(- xDiff / 2, -6px))
     &::after
         background mix(colorEmp15, transparent)
         inset (yDiff * 1.7) (xDiff * 1.7) (- yDiff * 1.7) (- xDiff * 1.7)
         z-index -2
         trans()
+        @media({mobile})
+            inset (max(yDiff * 1.7 / 2, 12px)) (max(xDiff * 1.7 / 2, 12px)) (min(- yDiff * 1.7 / 2, -12px)) (min(- xDiff * 1.7 / 2, -12px))
 block-emp-2(xDiff=20px, yDiff=20px)
     block-emp-1(xDiff, yDiff)
     background mix(colorEmp21, transparent, 80%)

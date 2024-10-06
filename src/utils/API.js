@@ -5,7 +5,7 @@ import * as Models from "~/utils/apiModels";
 export default class MY_API extends REST_API {
     getUser = () => this.#get('/user', undefined, Models.User);
     editProfile = (first_name, mid_name, last_name, tags, email, phone, info) => this.#put('/user', {first_name, mid_name, last_name, tags, email, phone, info});
-    editAvatar = (photo_url) => this.#put('/user/avatar', {photo_url});
+    editAvatar = (photo_url) => this.#put('/user', {photo_url});
     login = (email, password, client_browser, client_os) => this.#post('/auth', {email, password, client_browser, client_os});
     register = (first_name, mid_name, last_name, email, phone, password, client_browser, client_os) => this.#post('/auth/register', {first_name, mid_name, last_name, email, phone, password, client_browser, client_os});
     logout = () => this.#delete('/auth');
@@ -46,6 +46,22 @@ export default class MY_API extends REST_API {
         ok: true,
     }) //this.#get('/project/my', undefined, Models.ProjectsList);
     getAllProjects = this.getMyProjects //() => this.#get('/project/all', undefined, Models.ProjectsList);
+    getProjectById = (id) => ({
+        data: validateModel(Models.Project, {
+            id: '50-611',
+            title: 'Психологическая помощь после разбитого коммунизма',
+            goals: 'Возродить мотивацию строить коммунизм',
+            tags: ['Красный', 'Синий', 'Жёлтый'],
+            region: 'Москва',
+            url_for_preview: 'https://avatars.mds.yandex.net/i?id=e0346a13f890524fec12868dc172205f_l-7663003-images-thumbs&n=13',
+            format: 'Очно',
+            docs: ['https://localhost:5173/project/41-655asdasdasdasda/asd a/sd/a/sd /as/dasd', 'https://localhost:5173/']
+        }),
+        status: 200,
+        ok: true,
+    }) //this.#get(`/project/${id}`, undefined, Models.Project);
+    editProject = (id, title, goals, tags, region, format, docs) => this.#put(`/project`, {id, title, goals, tags, region, format, docs});
+    editProjectPreview = (id, url_for_preview) => this.#put(`/project`, {id, url_for_preview});
 
     getAllGosPrograms = () => ({
         data: validateModel(Models.GosProgramsList, {
@@ -151,14 +167,6 @@ export default class MY_API extends REST_API {
         status: 200,
         ok: true,
     }) //this.#get(`/feed/all`, undefined, Models.FeedsList);
-
-    getUserById = (id) => this.#get(`/user`, {id}, Models.User);
-    sendConfirmationLetter = (name, email) => this.#post('/email/confirm', {name, email});
-    confirmEmailByCode = (secretCode) => this.#put('/user/email/confirm', {secretCode});
-    changePassword = (oldPassword, newPassword) => this.#put('/user/password', {oldPassword, newPassword});
-    sendRestorePasswordLetter = (secretCode, newPassword) => this.#post('/user/password/restore', {secretCode, newPassword});
-    restorePassword = (secretCode, newPassword) => this.#put('/user/password', {secretCode, newPassword});
-
 
     async modelParsedRequest(requestFunc, path, data, model = undefined) {
         const {ok, data: dataRes, status} = await requestFunc.bind(this)(path, data);

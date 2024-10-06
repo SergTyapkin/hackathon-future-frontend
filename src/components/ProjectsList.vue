@@ -27,9 +27,6 @@
     flex-direction column
     .preview
       block-emp-1(12px, 12px)
-      @media({mobile})
-        block-emp-1(8px, 8px)
-        padding 0
       padding 0
       height 200px
       margin-bottom 35px

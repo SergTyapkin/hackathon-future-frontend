@@ -29,13 +29,12 @@
         button-no-styles()
         font-small()
         padding 0 10px
-        border-left 2px solid colorEmp11
+        border-left inherit
         centered-flex-container()
         img
           width 30px
           height 30px
           opacity 0.5
-
     .adding-container
       .input
         trans()
@@ -46,18 +45,41 @@
           & + .button-delete
             border-left transparent
 
+    &.links
+      flex-direction column
+      .tag-container
+      .adding-container
+        border-color colorEmp22
+        width 100%
+        .link
+          svg-inside(20px)
+          border-right inherit
+          img
+            filter invert(1)
+            opacity 0.7
+          &:hover
+            img
+              opacity 1
+      .tag-container
+        .input
+          width 100%
+          text-align left
+
+      .adding-container
+        width min-content
 </style>
 
 <template>
   <div class="root-tags-cloud">
-    <div class="tags-container">
-      <div v-if="(canAdd || canAll) && (limit === undefined || modelValue.length < limit)" class="adding-container">
-        <input class="input" :size="newTagText.length + 1" maxlength="30" v-model="newTagText" :class="{visible: isInputFocused}" ref="input" @focus="isInputFocused = true" @blur="onBlurInput" @keydown.enter="onBlurInput">
+    <div class="tags-container" :class="{links}">
+      <div v-if="(canAdd || canAll) && (limit === undefined || modelValue === undefined || modelValue.length < limit)" class="adding-container">
+        <input class="input" :size="newTagText.length + 1" :maxlength="links ? '' : 30" v-model="newTagText" :class="{visible: isInputFocused}" ref="input" @focus="isInputFocused = true" @blur="onBlurInput" @keydown.enter="onBlurInput">
         <button class="button-add" @click="onClickOnAddButton"><img src="../../res/icons/plus.svg" alt="plus"></button>
       </div>
 
       <div v-for="(tag, idx) in modelValue" class="tag-container">
-        <input class="input" :size="tag.length + 1" maxlength="30" v-model="modelValue[idx]" :disabled="!(canEdit || canAll)">
+        <a class="link" :href="'https://' + tag.replace(/^(https?:\/\/)?(.*)$/, '$2')" target="_blank"><img src="../../res/icons/external_link.svg" alt="link"></a>
+        <input class="input" :size="tag.length + 1" :maxlength="links ? '' : 30" v-model="modelValue[idx]" :disabled="!(canEdit || canAll)">
         <button v-if="canDelete || canAll" class="button-delete" @click="deleteItem(idx)"><img src="../../res/icons/trashbox.svg" alt="delete"></button>
       </div>
     </div>
@@ -65,8 +87,6 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-
 export default {
   emits: ['update:modelValue'],
 
@@ -80,6 +100,8 @@ export default {
     canAdd: Boolean,
     canEdit: Boolean,
     canDelete: Boolean,
+
+    links: Boolean,
   },
 
   data() {

@@ -55,8 +55,6 @@
             max-width 400px
             min-width 200px
     @media({mobile})
-      block-emp-2(8px, 8px)
-      padding 30px
       flex-direction column
       max-width 400px
       .preview

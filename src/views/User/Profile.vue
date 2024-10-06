@@ -24,9 +24,6 @@
       animation-opacity-slide-in(0, -50px)
       block-emp-1(15px, 15px)
       padding 0
-      @media({mobile})
-        block-emp-1(8px, 8px)
-        padding 0
       .bg
         border colorEmp16 5px solid
         background colorBg
@@ -39,9 +36,6 @@
     .section.side-data
       block-emp-2(-15px, -15px)
       padding 0
-      @media({mobile})
-        block-emp-2(8px, 8px)
-        padding 0
       .bg
         background colorBg
         border colorEmp21 5px solid
@@ -143,9 +137,10 @@
 
           <div class="avatar-container">
             <CircleLoading v-if="loading"></CircleLoading>
-            <DragNDropLoader v-else class="image-loader" @load="updateAvatar"
-                             :crop-size="cropSize"
-                             :compress-size="compressSize"
+            <DragNDropLoader v-else class="image-loader"
+                             @load="updateAvatar"
+                             :crop-size="IMAGE_PROFILE_MAX_RES"
+                             :compress-size="IMAGE_MAX_RES"
             >
               <img class="avatar" :src="$user.photoUrl || DEFAULT_AVATAR_URL" alt="avatar">
             </DragNDropLoader>
@@ -222,8 +217,8 @@ export default {
       isInEditData: false,
       curUserData: {},
 
-      cropSize: IMAGE_PROFILE_MAX_RES,
-      compressSize: IMAGE_MAX_RES,
+      IMAGE_PROFILE_MAX_RES,
+      IMAGE_MAX_RES,
       DEFAULT_AVATAR_URL,
       UserRoles,
     }
