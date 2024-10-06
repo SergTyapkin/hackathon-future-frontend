@@ -4,7 +4,7 @@ import * as Models from "~/utils/apiModels";
 
 export default class MY_API extends REST_API {
     getUser = () => this.#get('/user', undefined, Models.User);
-    editProfile = (first_name, mid_name, last_name, interests, email, phone, bio) => this.#put('/user', {first_name, mid_name, last_name, interests, email, phone, bio});
+    editProfile = (first_name, mid_name, last_name, tags, email, phone, info) => this.#put('/user', {first_name, mid_name, last_name, tags, email, phone, info});
     editAvatar = (photo_url) => this.#put('/user/avatar', {photo_url});
     login = (email, password, client_browser, client_os) => this.#post('/auth', {email, password, client_browser, client_os});
     register = (first_name, mid_name, last_name, email, phone, password, client_browser, client_os) => this.#post('/auth/register', {first_name, mid_name, last_name, email, phone, password, client_browser, client_os});

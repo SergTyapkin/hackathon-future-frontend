@@ -19,16 +19,14 @@
   <div class="root-page-all-projects">
     <header class="title">Все проекты активистов</header>
 
-    <ProjectsList :list="projectsList"></ProjectsList>
+
   </div>
 </template>
 
 
 <script>
-import ProjectsList from "~/components/ProjectsList.vue";
-
 export default {
-  components: {ProjectsList},
+  components: {},
 
   data() {
     return {

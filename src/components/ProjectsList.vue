@@ -70,7 +70,7 @@
 
 <template>
   <ul class="root-list-projects">
-    <li v-for="(project, idx) in list" class="project __animation-started" :style="{'--animation-index': idx}">
+    <router-link v-for="(project, idx) in list" :to="{name: 'project', params: {id: project.id}}" class="project __animation-started" :style="{'--animation-index': idx}">
       <div class="preview"><img :src="project.previewUrl" alt="preview"></div>
 
       <div class="data-container">
@@ -79,7 +79,7 @@
         <div class="place"><img src="../../res/icons/place.svg" alt="geo">{{ project.region }} | {{ project.format }}</div>
         <TagsCloud class="tags" v-model="project.tags"></TagsCloud>
       </div>
-    </li>
+    </router-link>
   </ul>
 </template>
 

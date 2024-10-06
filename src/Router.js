@@ -11,6 +11,7 @@ import PageMainWorkspace from "~/views/PageMainWorkspace.vue";
 import PageAllProjects from "~/views/PageAllProjects.vue";
 import PageAllFeeds from "~/views/PageAllFeeds.vue";
 import PageAllGosPrograms from "~/views/PageAllGosPrograms.vue";
+import PageProject from "~/views/PageProject.vue";
 
 export default function createVueRouter(Store) {
     const routes = [
@@ -25,6 +26,7 @@ export default function createVueRouter(Store) {
         {path: '/projects', name: 'allProjects', component: PageAllProjects, meta: {loginRequired: true}},
         {path: '/feeds', name: 'allFeeds', component: PageAllFeeds},
         {path: '/gos-programs', name: 'gosPrograms', component: PageAllGosPrograms},
+        {path: '/project/:id', name: 'project', component: PageProject, meta: {loginRequired: true}},
 
         {path: '/:pathMatch(.*)*', name: 'page404', component: Page404},
     ];
