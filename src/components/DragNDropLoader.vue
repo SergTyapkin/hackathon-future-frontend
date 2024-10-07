@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import {getImageAsDataURL, getLoadedImageAsDataURL} from "@korolion/get-image-as-dataurl";
+// import {getImageAsDataURL, getLoadedImageAsDataURL} from "@korolion/get-image-as-dataurl";
 
 
 export default {
@@ -85,7 +85,7 @@ export default {
   methods: {
     async handleDrop(event) {
       this.isInDrag = false;
-      this.$emit('load', await getLoadedImageAsDataURL(event.dataTransfer, this.cropSize, this.compressSize, this.maxAllowedSize));
+      // this.$emit('load', await getLoadedImageAsDataURL(event.dataTransfer, this.cropSize, this.compressSize, this.maxAllowedSize));
     },
 
     async getUserImage() {
@@ -94,12 +94,12 @@ export default {
       }
       let dataURL;
       try {
-        dataURL = await getImageAsDataURL(this.cropSize, this.compressSize, undefined, Infinity);
+        // dataURL = await getImageAsDataURL(this.cropSize, this.compressSize, undefined, Infinity);
       } catch (err) {
         this.popups.error("Ошибка загрузки изображения", err.toString());
         throw err;
       }
-      this.$emit('load', dataURL);
+      // this.$emit('load', dataURL);
     }
   }
 };
