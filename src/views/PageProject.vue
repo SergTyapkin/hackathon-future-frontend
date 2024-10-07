@@ -123,6 +123,7 @@
           ID{{ project.id }}
           <button v-if="!isInEditMode && !canEdit" class="button-join" @click="joinProject">Присоединиться!</button>
         </div>
+        <div v-else class="info container-join"></div>
       </div>
     </div>
 
