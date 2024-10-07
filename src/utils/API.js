@@ -191,6 +191,7 @@ export default class MY_API extends REST_API {
         status: 200,
         ok: true,
     }) //this.#get(`/feed/all`, undefined, Models.FeedsList);
+    getMyFeeds = this.getAllFeeds
     getFeedById = (id) => ({
         data: validateModel(Models.Feed,
         {
