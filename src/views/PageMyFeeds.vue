@@ -17,7 +17,7 @@
 
 <template>
   <div class="root-page-all-projects">
-    <header class="title">Новости проектора</header>
+    <header class="title">Мои новости</header>
 
     <FeedsList :list="feedsList"></FeedsList>
   </div>
