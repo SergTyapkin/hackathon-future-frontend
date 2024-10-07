@@ -100,7 +100,7 @@
     <div class="group-right" :class="{closed: !isRightOpened}">
       <router-link class="link" :to="{name: 'main'}">Мои проекты</router-link>
       <router-link class="link" :to="{name: 'myFeeds'}">Мои новости</router-link>
-      <router-link class="link" :to="{name: 'main'}">Чаты</router-link>
+      <router-link class="link" :to="{name: 'messenger'}">Чаты</router-link>
     </div>
     <router-link v-if="$store.state.user.isSignedIn" class="link profile" @click="openRight" :to="isRightOpened ? {name: 'profile'} : ''">{{ isRightOpened ? '&nbsp;&nbsp;' : '<'}}&nbsp;&nbsp;<img :src="$user.photoUrl || DEFAULT_AVATAR_URL" alt="avatar">{{ $user.firstName }} {{ isRightOpened ? '' : '' }}</router-link>
     <router-link v-else class="link profile" :to="{name: 'login'}">Войти ></router-link>

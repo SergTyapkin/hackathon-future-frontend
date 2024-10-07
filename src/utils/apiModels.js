@@ -144,3 +144,22 @@ export const GosProgramsList = {
     }
   }
 }
+
+
+export const Chat = {
+  id: String,
+  title: String,
+  userId: {type: String},
+  userName: {type: String},
+  userAvatar: {type: String},
+}
+
+export const ChatList = {
+  chats: {
+    type: Array,
+    item: {
+      type: Object,
+      fields: Chat,
+    },
+  }
+}

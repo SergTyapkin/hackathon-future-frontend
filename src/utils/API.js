@@ -61,6 +61,49 @@ export default class MY_API extends REST_API {
     editFeedPreview = (id, preview_url) => this.#put(`/feed`, {id, preview_url});
     createFeed = (title, contents, tags, url_for_preview) => this.#post(`/feed`, {title, contents, tags, url_for_preview});
 
+
+    getAllMyChats = () => ({
+        data: validateModel(Models.ChatList, {
+            chats: [
+                {
+                    id: '41-655',
+                    title: 'Строим коммунизм',
+                    userName: 'Дядя Петр',
+                    userId: '13-231',
+                    userAvatar: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                },
+                {
+                    id: '41-655',
+                    title: 'Строим коммунизм',
+                    userName: 'Дядя Петр',
+                    userId: '13-231',
+                    userAvatar: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                },
+                {
+                    id: '41-655',
+                    title: 'Строим коммунизм',
+                    userName: 'Дядя Петр',
+                    userId: '13-231',
+                    userAvatar: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                },
+                {
+                    id: '41-655',
+                    title: 'Строим коммунизм',
+                    userName: 'Дядя Петр',
+                    userId: '13-231',
+                    userAvatar: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
+                },
+            ]
+        }),
+        status: 200,
+        ok: true,
+    }) //this.#get(`/chat/all`, undefined, Models.ChatList);
+
+
+
+
+
+    // ----------------------------------------------------------------
     async modelParsedRequest(requestFunc, path, data, model = undefined) {
         const {ok, data: dataRes, status} = await requestFunc.bind(this)(path, data);
         if (!ok) {
