@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import {getImageAsDataURL, getLoadedImageAsDataURL} from "@korolion/get-image-as-dataurl/getImageAsDataURL";
+import {getImageAsDataURL, getLoadedImageAsDataURL} from "@korolion/get-image-as-dataurl";
 
 
 export default {
