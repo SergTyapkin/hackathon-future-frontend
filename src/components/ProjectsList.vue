@@ -16,6 +16,7 @@
   gap 60px
   @media({mobile})
     gap 30px
+
   .nothing-info
     font-large()
     text-align center

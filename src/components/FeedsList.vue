@@ -17,6 +17,13 @@
     flex-direction column
     align-items center
     flex-wrap nowrap
+
+  .nothing-info
+    font-large()
+    width 100%
+    text-align center
+    color colorTextLight3
+
   .feed
     animation-opacity-slide-in(0, -50px, 0.4s, 0.1s)
     flex 1
@@ -88,7 +95,9 @@
 
 <template>
   <div class="root-list-feeds">
-    <router-link v-for="(feed, idx) in list" :to="{name: 'feed', params: {id: feed.id}}" class="feed __animation-started" :style="{'--animation-index': idx}">
+    <header v-if="!list.length" class="nothing-info">Новостей пока что нет</header>
+
+    <router-link v-else v-for="(feed, idx) in list" :to="{name: 'feed', params: {id: feed.id}}" class="feed __animation-started" :style="{'--animation-index': idx}">
       <div class="preview"><img :src="feed.previewUrl" alt="preview"></div>
 
       <div class="container-data">
