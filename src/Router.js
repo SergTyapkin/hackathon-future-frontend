@@ -15,6 +15,7 @@ import PageProject from "~/views/PageProject.vue";
 import {nextTick} from "vue";
 import {scrollSmoothly, scrollSmoothlyStop} from "~/utils/utils";
 import PageFeed from "~/views/PageFeed.vue";
+import PageMyFeeds from "~/views/PageMyFeeds.vue";
 
 export default function createVueRouter(Store, scrollToTopDenyHrefs=[]) {
     const routes = [
@@ -33,6 +34,7 @@ export default function createVueRouter(Store, scrollToTopDenyHrefs=[]) {
         {path: '/project/create', name: 'createProject', component: PageProject, meta: {loginRequired: true}},
         {path: '/feed/:id', name: 'feed', component: PageFeed, meta: {loginRequired: true}},
         {path: '/feed/create', name: 'createFeed', component: PageFeed, meta: {loginRequired: true}},
+        {path: '/feeds/my', name: 'myFeeds', component: PageMyFeeds, meta: {loginRequired: true}},
 
         {path: '/:pathMatch(.*)*', name: 'page404', component: Page404},
     ];

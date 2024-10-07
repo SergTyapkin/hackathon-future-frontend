@@ -56,16 +56,27 @@
       @media({mobile})
         max-width 0
         border none
+
+  .group
+    &.closed
+      display none
 </style>
 
 <template>
   <header class="root-header">
-    <router-link class="link logo" :to="{name: 'default'}"><img src="../../res/icons/projector.svg" alt="logo">Проектор</router-link>
-    <router-link class="link" :to="{name: 'allProjects'}">Проекты</router-link>
-    <router-link class="link" :to="{name: 'allFeeds'}">Новости</router-link>
-    <router-link class="link" :to="{name: 'gosPrograms'}">Гос. программы</router-link>
+    <router-link class="link logo" @click="openLeft" :to="isRightOpened ? null : {name: 'default'}"><img src="../../res/icons/projector.svg" alt="logo">Проектор</router-link>
+    <div class="group" :class="{closed: isRightOpened}">
+      <router-link class="link" :to="{name: 'allProjects'}">Проекты</router-link>
+      <router-link class="link" :to="{name: 'allFeeds'}">Новости</router-link>
+      <router-link class="link" :to="{name: 'gosPrograms'}">Гос. программы</router-link>
+    </div>
 
-    <router-link v-if="$store.state.user.isSignedIn" class="link profile" :to="{name: 'profile'}"><img :src="$user.photoUrl || DEFAULT_AVATAR_URL" alt="avatar">{{ $user.midName }} ></router-link>
+    <div class="group" :class="{closed: !isRightOpened}">
+      <router-link class="link" :to="{name: 'main'}">Мои проекты</router-link>
+      <router-link class="link" :to="{name: 'myFeeds'}">Мои новости</router-link>
+      <router-link class="link" :to="{name: 'main'}">Чаты</router-link>
+    </div>
+    <router-link v-if="$store.state.user.isSignedIn" class="link profile" @click="openRight" :to="isRightOpened ? {name: 'profile'} : null"><img :src="$user.photoUrl || DEFAULT_AVATAR_URL" alt="avatar">{{ $user.midName }} ></router-link>
     <router-link v-else class="link profile" :to="{name: 'login'}">Войти ></router-link>
   </header>
 </template>
@@ -79,14 +90,28 @@ export default {
 
   data() {
     return {
+      isRightOpened: false,
+
       DEFAULT_AVATAR_URL,
     }
   },
 
   mounted() {
+    if (this.$store.state.user.isSignedIn) {
+      this.isRightOpened = true;
+    }
   },
 
   methods: {
+    openLeft() {
+      this.isRightOpened = false;
+    },
+    openRight() {
+      if (!this.$store.state.user.isSignedIn) {
+        return;
+      }
+      this.isRightOpened = true;
+    }
   }
 };
 </script>

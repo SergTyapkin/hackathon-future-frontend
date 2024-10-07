@@ -55,6 +55,7 @@ export default class MY_API extends REST_API {
     }) //this.#get('/gos-programs/all', undefined, Models.GosProgramsList);
 
     getAllFeeds = () => this.#get(`/feed/all`, undefined, Models.FeedsList);
+    getMyFeeds = () => this.#get(`/feed/my`, undefined, Models.FeedsList);
     getFeedById = (id) => this.#get(`/feed/${id}`, undefined, Models.Feed);
     editFeed = (id, title, contents, tags) => this.#put(`/feed`, {id, title, contents, tags});
     editFeedPreview = (id, preview_url) => this.#put(`/feed`, {id, preview_url});
