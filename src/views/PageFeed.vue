@@ -6,7 +6,7 @@
 @require '../styles/components.styl'
 @require '../styles/animations.styl'
 
-.root-page-project
+.root-page-feed
   page-padding()
 
   .title
@@ -58,11 +58,13 @@
       flex 1
       max-width 300px
 
-  .goals
+  .contents
     font-medium()
     block-emp-1-bg()
     color colorText1
+    //padding 2px 20px
     padding 20px
+    --color colorEmp21
 
   .selector
     min-width 200px
@@ -88,8 +90,16 @@
       padding 10px 30px
 </style>
 
+<style lang="stylus">
+@require '../styles/fonts.styl'
+
+.root-page-feed
+  textarea
+    font-medium()
+</style>
+
 <template>
-  <div class="root-page-project" @input="setEdited">
+  <div class="root-page-feed" @input="setEdited">
     <div class="flex-container">
       <div class="avatar-container">
         <CircleLoading v-if="loading"></CircleLoading>
@@ -100,55 +110,30 @@
                          :compress-size="IMAGE_MAX_RES"
                          :disabled="!isInEditMode"
         >
-          <img class="preview" :src="project.previewUrl || DEFAULT_AVATAR_URL" alt="preview">
+          <img class="preview" :src="feed.previewUrl || DEFAULT_AVATAR_URL" alt="preview">
         </DragNDropLoader>
       </div>
 
       <div class="text-container">
-        <div class="info" v-if="isInEditMode">Название проекта</div>
-        <EditableDiv class="title" :editable="isInEditMode" v-model="project.title"></EditableDiv>
-        <div v-if="!isInCreateMode" class="info">ID{{ project.id }}</div>
+        <div class="info" v-if="isInEditMode">Название статьи</div>
+        <EditableDiv class="title" v-model="feed.title" :editable="isInEditMode"></EditableDiv>
+        <div v-if="!isInCreateMode" class="info">ID{{ feed.id }}</div>
       </div>
     </div>
 
     <br>
 
-    <div class="info">Цели проекта</div>
-    <EditableDiv class="goals" v-model="project.goals" :editable="isInEditMode"></EditableDiv>
+    <div class="info">Основной текст</div>
+    <MarkdownRedactor v-if="isInEditMode" class="contents" v-model="feed.contents"></MarkdownRedactor>
+<!--    <MarkdownRenderer v-else :initial-text="feed.contents"></MarkdownRenderer>-->
+    <div v-else class="contents">{{ feed.contents }}</div>
 
     <br>
     <br>
     <br>
 
     <div class="info">Тэги для поиска</div>
-    <TagsCloud v-model="project.tags" :can-all="isInEditMode"></TagsCloud>
-
-    <br>
-    <br>
-
-
-    <div class="flex-container">
-      <div class="region">
-        <div class="info">Регион</div>
-        <RegionsSelector class="selector" :editable="isInEditMode" v-model="project.region"></RegionsSelector>
-      </div>
-
-      <div class="format">
-        <div class="info">Формат</div>
-        <Selector class="selector" :editable="isInEditMode" v-model="project.format">
-          <option value="Очно">Очно</option>
-          <option value="Онлайн">Онлайн</option>
-          <option value="Гибрид">Гибрид</option>
-          <option value="Другое">Другое</option>
-        </Selector>
-      </div>
-    </div>
-
-    <br>
-    <br>
-
-    <div class="info">Ссылки на документы</div>
-    <TagsCloud v-model="project.docs" :can-all="isInEditMode" :limit="20" links></TagsCloud>
+    <TagsCloud v-model="feed.tags" :can-all="isInEditMode"></TagsCloud>
 
     <br>
     <br>
@@ -156,25 +141,26 @@
     <br>
 
     <div class="buttons-container">
-      <button v-if="canEdit && !isInEditMode" class="button-edit" @click="isInEditMode = true"><img src="../../res/icons/edit.svg" alt="edit">Изменить</button>
-
       <button v-if="canEdit && isInEditMode" class="button-cancel" @click="setNotEdited"><img src="../../res/icons/cross.svg" alt="cancel">Отменить</button>
-      <button v-if="canEdit && isInEditMode" class="button-save" @click="editProject"><img src="../../res/icons/save.svg" alt="save">Сохранить</button>
 
-      <button v-if="isInCreateMode" class="button-create" @click="createProject"><img src="../../res/icons/plus.svg" alt="plus">Создать</button>
+      <button v-if="canEdit && !isInEditMode" class="button-edit" @click="isInEditMode = true"><img src="../../res/icons/edit.svg" alt="edit">Изменить</button>
+      <button v-if="canEdit && isInEditMode" class="button-save" @click="editFeed"><img src="../../res/icons/save.svg" alt="save">Сохранить</button>
+
+      <button v-if="isInCreateMode" class="button-create" @click="createFeed"><img src="../../res/icons/plus.svg" alt="plus">Создать</button>
     </div>
   </div>
 </template>
 
 
 <script>
+import MarkdownRedactor from "@sergtyapkin/markdown/MarkdownRedactor.vue";
+// import MarkdownRenderer from "@sergtyapkin/markdown/MarkdownRenderer.vue";
 import EditableDiv from "~/components/EditableDiv.vue";
 import DragNDropLoader from "~/components/DragNDropLoader.vue";
 import {
   DEFAULT_AVATAR_URL,
   IMAGE_MAX_RES,
   IMAGE_PROFILE_MAX_RES,
-  ProjectRoles,
 } from "~/utils/constants";
 import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import TagsCloud from "~/components/TagsCloud.vue";
@@ -182,18 +168,18 @@ import RegionsSelector from "~/components/selectors/RegionsSelector.vue";
 import Selector from "~/components/selectors/Selector.vue";
 
 export default {
-  components: {Selector, RegionsSelector, TagsCloud, CircleLoading, DragNDropLoader, EditableDiv},
+  components: {Selector, RegionsSelector, TagsCloud, CircleLoading, DragNDropLoader, EditableDiv, MarkdownRedactor},
 
   data() {
     return {
       loading: false,
       isInEditMode: false,
 
-      projectId: this.$route.params.id,
-      project: {
+      feedId: this.$route.params.id,
+      feed: {
         id: '',
         title: '',
-        goals: '',
+        contents: '',
         tags: [],
         region: '',
         previewUrl: '',
@@ -209,26 +195,26 @@ export default {
 
   computed: {
     canEdit() {
-      return [ProjectRoles.activist, ProjectRoles.head].includes(this.project.myRole);
+      return (this.feed.authorId === this.$user.id);
     },
 
     isInCreateMode() {
-      return this.projectId === undefined;
+      return this.feedId === undefined;
     }
   },
 
   mounted() {
     if (!this.isInCreateMode) {
-      this.getProject();
+      this.getFeed();
     } else {
       this.isInEditMode = true;
     }
   },
 
   methods: {
-    async getProject() {
+    async getFeed() {
       this.loading = true;
-      const {data, ok} = await this.$api.getProjectById();
+      const {data, ok} = await this.$api.getFeedById();
       this.loading = false;
 
       if (!ok) {
@@ -236,59 +222,62 @@ export default {
         return;
       }
 
-      this.project = data;
+      this.feed = data;
     },
     async updateAvatar(dataURL) {
       if (this.isInCreateMode) {
-        this.project.previewUrl = dataURL;
+        this.feed.previewUrl = dataURL;
         return;
       }
       this.loading = true;
-      const {ok} = await this.$api.editProjectPreview(this.projectId, dataURL);
+      const {ok} = await this.$api.editFeedPreview(this.feedId, dataURL);
       this.loading = false;
       if (!ok) {
         this.$popups.error('Не получилось загрузить картинку', 'Неизвестная ошибка');
         return;
       }
       this.$popups.success('Успешно', 'Картинка обновлена');
-      this.project.previewUrl = dataURL;
+      this.feed.previewUrl = dataURL;
     },
 
-    async createProject() {
+    async createFeed() {
       if (
-        !this.project.title ||
-        !this.project.goals ||
-        !this.project.region ||
-        !this.project.format
+        !this.feed.title ||
+        !this.feed.contents ||
+        !this.feed.region ||
+        !this.feed.format
       ) {
         this.$popups.error('Не заполнены поля', 'Заполните поля названия, целей, региона, формата');
         return;
       }
       this.loading = true;
-      const {ok} = await this.$api.createProject(this.project.title, this.project.goals, this.project.tags, this.project.region, this.project.format, this.project.docs, this.project.previewUrl);
+      const {ok} = await this.$api.createFeed(this.feed.title, this.feed.contents, this.feed.tags, this.feed.region, this.feed.format, this.feed.docs, this.feed.previewUrl);
       this.loading = false;
 
       if (!ok) {
         this.$popups.error('Не получилось создать поект', 'Неизвестная ошибка');
         return;
       }
-      this.$router.push({name: 'myProjects'});
+      this.$router.push({name: 'myFeeds'});
     },
 
-    async editProject() {
+    async editFeed() {
       this.loading = true;
-      const {ok} = await this.$api.editProject(this.projectId, this.project.title, this.project.goals, this.project.tags, this.project.region, this.project.format, this.project.docs);
+      const {ok} = await this.$api.editFeed(this.feedId, this.feed.title, this.feed.contents, this.feed.tags, this.feed.region, this.feed.format, this.feed.docs);
       this.loading = false;
 
       if (!ok) {
         this.$popups.error('Не получилось создать поект', 'Неизвестная ошибка');
         return;
       }
-      this.$router.push({name: 'myProjects'});
+      this.$router.push({name: 'myFeeds'});
     },
 
     setEdited() {
-      window.onbeforeunload = (e) => {e.preventDefault(); e.returnValue = '';};
+      window.onbeforeunload = (e) => {
+        e.preventDefault();
+        e.returnValue = '';
+      };
       this.isInEditMode = true;
     },
     setNotEdited() {

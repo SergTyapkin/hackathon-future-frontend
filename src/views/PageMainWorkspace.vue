@@ -43,7 +43,7 @@
     </section>
 
     <section class="section">
-      <header class="title">Новости</header>
+      <header class="title">Новости<FloatingButton :to="{name: 'createFeed'}" title="Создать новость"><img src="../../res/icons/plus.svg" alt="plus" width="30" height="30"></FloatingButton></header>
       <FeedsList :list="feedsList"></FeedsList>
     </section>
 

@@ -86,11 +86,15 @@ export default {
   methods: {
     async login(data) {
       this.loading = true;
-      const {ok} = await this.$api.login(data.email, data.password, detectBrowser(), detectOS());
+      const {status, ok} = await this.$api.login(data.email, data.password, detectBrowser(), detectOS());
       this.loading = false;
 
-      if (!ok) {
+      if (status === 403) {
         this.$refs.form.setError([this.fields.email, this.fields.password], 'Неверные email или пароль');
+        return;
+      }
+      if (!ok) {
+        this.$popups.error('Не удалось войти', 'Неизвестная ошибка');
         return;
       }
       this.loading = true;

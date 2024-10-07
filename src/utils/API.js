@@ -10,12 +10,16 @@ export default class MY_API extends REST_API {
     register = (first_name, mid_name, last_name, email, phone, password, client_browser, client_os) => this.#post('/auth/register', {first_name, mid_name, last_name, email, phone, password, client_browser, client_os});
     logout = () => this.#delete('/auth');
 
-    getMyProjects = () => this.#get('/project/my', undefined, Models.ProjectsList);
-    getAllProjects = this.getMyProjects //() => this.#get('/project/all', undefined, Models.ProjectsList);
-    getProjectById = (id) => this.#get(`/project/${id}`, undefined, Models.Project);
+    // getMyProjects = () => this.#get('/project/my', undefined, Models.ProjectsList);
+    // getAllProjects = this.getMyProjects //() => this.#get('/project/all', undefined, Models.ProjectsList);
+    // getProjectById = (id) => this.#get(`/project/${id}`, undefined, Models.Project);
     editProject = (id, title, goals, tags, region, format, docs) => this.#put(`/project`, {id, title, goals, tags, region, format, docs});
     editProjectPreview = (id, url_for_preview) => this.#put(`/project`, {id, url_for_preview});
     createProject = (title, goals, tags, region, format, docs, url_for_preview) => this.#post(`/project`, {title, goals, tags, region, format, docs, url_for_preview});
+    getMyProjects = () => this.#get('/project/my', undefined, Models.ProjectsList);
+    getAllProjects = () => this.#get('/project/all', undefined, Models.ProjectsList);
+    getProjectById = (id) => this.#get(`/project/${id}`, undefined, Models.Project);
+
 
     getAllGosPrograms = () => ({
         data: validateModel(Models.GosProgramsList, {
@@ -50,77 +54,11 @@ export default class MY_API extends REST_API {
         ok: true,
     }) //this.#get('/gos-programs/all', undefined, Models.GosProgramsList);
 
-    getAllFeeds = () => ({
-        data: validateModel(Models.FeedsList, {
-            feeds: [
-                {
-                    id: '41-655',
-                    title: 'Строим коммунизм',
-                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
-                    tags: ['Красный', 'Синий', 'Жёлтый'],
-                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
-                    author_id: '423-23',
-                    author_name: 'Олег Петров',
-                },
-                {
-                    id: '4231-655',
-                    title: 'Рушим коммунизм',
-                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
-                    tags: ['Красный', 'Синий', 'Жёлтый'],
-                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
-                    author_id: '423-23',
-                    author_name: 'Евгения Завалишина',
-                },
-                {
-                    id: '41-6552',
-                    title: 'Помогите он сломался',
-                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
-                    tags: ['Красный', 'Синий', 'Жёлтый'],
-                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
-                    author_id: '423-23',
-                    author_name: 'Олег Иванов',
-                },
-                {
-                    id: '41-6552',
-                    title: 'Помогите он сломался',
-                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
-                    tags: ['Красный', 'Синий', 'Жёлтый'],
-                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
-                    author_id: '423-23',
-                    author_name: 'Олег Иванов',
-                },
-                {
-                    id: '41-6552',
-                    title: 'Помогите он сломался',
-                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
-                    tags: ['Красный', 'Синий', 'Жёлтый'],
-                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
-                    author_id: '423-23',
-                    author_name: 'Олег Иванов',
-                },
-                {
-                    id: '41-6552',
-                    title: 'Помогите он сломался',
-                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
-                    tags: ['Красный', 'Синий', 'Жёлтый'],
-                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
-                    author_id: '423-23',
-                    author_name: 'Олег Иванов',
-                },
-                {
-                    id: '41-6552',
-                    title: 'Помогите он сломался',
-                    contents: 'Цели этой работы могут быть достаточно многообразны. Достаточно вспомнить хотя бы опыт предыдущих лет, через который прошли многие именитые научные деятели, и тогда все сразу встает на свои места.',
-                    tags: ['Красный', 'Синий', 'Жёлтый'],
-                    preview_url: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
-                    author_id: '423-23',
-                    author_name: 'Олег Иванов',
-                },
-            ]
-        }),
-        status: 200,
-        ok: true,
-    }) //this.#get(`/feed/all`, undefined, Models.FeedsList);
+    getAllFeeds = () => this.#get(`/feed/all`, undefined, Models.FeedsList);
+    getFeedById = (id) => this.#get(`/feed/${id}`, undefined, Models.Feed);
+    editFeed = (id, title, contents, tags) => this.#put(`/feed`, {id, title, contents, tags});
+    editFeedPreview = (id, preview_url) => this.#put(`/feed`, {id, preview_url});
+    createFeed = (title, contents, tags, url_for_preview) => this.#post(`/feed`, {title, contents, tags, url_for_preview});
 
     async modelParsedRequest(requestFunc, path, data, model = undefined) {
         const {ok, data: dataRes, status} = await requestFunc.bind(this)(path, data);

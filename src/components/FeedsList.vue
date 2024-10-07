@@ -87,8 +87,8 @@
 
 
 <template>
-  <ul class="root-list-feeds">
-    <li v-for="(feed, idx) in list" class="feed __animation-started" :style="{'--animation-index': idx}">
+  <div class="root-list-feeds">
+    <router-link v-for="(feed, idx) in list" :to="{name: 'feed', params: {id: feed.id}}" class="feed __animation-started" :style="{'--animation-index': idx}">
       <div class="preview"><img :src="feed.previewUrl" alt="preview"></div>
 
       <div class="container-data">
@@ -96,8 +96,8 @@
         <div class="contents">{{ feed.contents.slice(0, 100) }}...</div>
         <div class="author"><img src="../../res/icons/profile.svg" alt="preview">{{ feed.authorName }}</div>
       </div>
-    </li>
-  </ul>
+    </router-link>
+  </div>
 </template>
 
 

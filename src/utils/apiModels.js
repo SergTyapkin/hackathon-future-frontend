@@ -64,7 +64,6 @@ export const Project = {
   },
   myRole: {
     type: new Set(['head', 'activist', 'volunteer', 'guest']),
-    optional: true,
     from: 'your_role',
   }
 }
