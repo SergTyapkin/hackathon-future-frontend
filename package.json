@@ -13,7 +13,6 @@
     "dist": "vite build --out-dir dist"
   },
   "dependencies": {
-    "@sergtyapkin/markdown": "^1.0.5",
     "@sergtyapkin/modals-popups": "^1.1.1",
     "@sergtyapkin/models-validator": "^1.0.6",
     "@sergtyapkin/reconnecting-websocket": "^1.0.5",

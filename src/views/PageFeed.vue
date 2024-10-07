@@ -124,9 +124,9 @@
     <br>
 
     <div class="info">Основной текст</div>
-    <MarkdownRedactor v-if="isInEditMode" class="contents" v-model="feed.contents"></MarkdownRedactor>
+<!--    <MarkdownRedactor v-if="isInEditMode" class="contents" v-model="feed.contents"></MarkdownRedactor>-->
 <!--    <MarkdownRenderer v-else :initial-text="feed.contents"></MarkdownRenderer>-->
-    <div v-else class="contents">{{ feed.contents }}</div>
+    <EditableDiv class="contents" v-model="feed.contents" :editable="isInEditMode"></EditableDiv>
 
     <br>
     <br>
@@ -153,7 +153,7 @@
 
 
 <script>
-import MarkdownRedactor from "@sergtyapkin/markdown/MarkdownRedactor.vue";
+// import MarkdownRedactor from "@sergtyapkin/markdown/MarkdownRedactor.vue";
 // import MarkdownRenderer from "@sergtyapkin/markdown/MarkdownRenderer.vue";
 import EditableDiv from "~/components/EditableDiv.vue";
 import DragNDropLoader from "~/components/DragNDropLoader.vue";
@@ -168,7 +168,7 @@ import RegionsSelector from "~/components/selectors/RegionsSelector.vue";
 import Selector from "~/components/selectors/Selector.vue";
 
 export default {
-  components: {Selector, RegionsSelector, TagsCloud, CircleLoading, DragNDropLoader, EditableDiv, MarkdownRedactor},
+  components: {Selector, RegionsSelector, TagsCloud, CircleLoading, DragNDropLoader, EditableDiv},
 
   data() {
     return {
