@@ -49,8 +49,20 @@
           display block
     .text-container
       flex 1
+      display flex
+      gap 20px
+      flex-direction column
+      justify-content space-between
       @media({desktop})
         max-width calc(100% - 250px)
+      .container-join
+        display flex
+        justify-content space-between
+        align-items end
+        .button-join
+          flex 0.6
+          button-fill-accent()
+          border-radius borderRadiusXL
 
   .flex-container
     .region
@@ -107,10 +119,14 @@
       <div class="text-container">
         <div class="info" v-if="isInEditMode">Название проекта</div>
         <EditableDiv class="title" :editable="isInEditMode" v-model="project.title"></EditableDiv>
-        <div v-if="!isInCreateMode" class="info">ID{{ project.id }}</div>
+        <div v-if="!isInCreateMode" class="info container-join">
+          ID{{ project.id }}
+          <button v-if="!isInEditMode && !canEdit" class="button-join" @click="joinProject">Присоединиться!</button>
+        </div>
       </div>
     </div>
 
+    <br>
     <br>
 
     <div class="info">Цели проекта</div>
@@ -286,6 +302,19 @@ export default {
       }
       this.$router.push({name: 'myProjects'});
     },
+
+    async joinProject() {
+      this.loading = true;
+      const {ok} = await this.$api.joinProject(this.projectId);
+      this.loading = false;
+
+      if (!ok) {
+        this.$popups.error('Не получилось присоединиться', 'Неизвестная ошибка');
+        return;
+      }
+      this.$router.push({name: 'allProjects'});
+    },
+
 
     setEdited() {
       window.onbeforeunload = (e) => {e.preventDefault(); e.returnValue = '';};
