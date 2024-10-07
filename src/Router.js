@@ -12,8 +12,10 @@ import PageAllProjects from "~/views/PageAllProjects.vue";
 import PageAllFeeds from "~/views/PageAllFeeds.vue";
 import PageAllGosPrograms from "~/views/PageAllGosPrograms.vue";
 import PageProject from "~/views/PageProject.vue";
+import {nextTick} from "vue";
+import {scrollSmoothly, scrollSmoothlyStop} from "~/utils/utils";
 
-export default function createVueRouter(Store) {
+export default function createVueRouter(Store, scrollToTopDenyHrefs=[]) {
     const routes = [
         {path: '/', name: 'default', component: Page404},
         {path: '/landing', name: 'landing', component: PageLanding},
@@ -27,6 +29,7 @@ export default function createVueRouter(Store) {
         {path: '/feeds', name: 'allFeeds', component: PageAllFeeds},
         {path: '/gos-programs', name: 'gosPrograms', component: PageAllGosPrograms},
         {path: '/project/:id', name: 'project', component: PageProject, meta: {loginRequired: true}},
+        {path: '/project/create', name: 'createProject', component: PageProject, meta: {loginRequired: true}},
 
         {path: '/:pathMatch(.*)*', name: 'page404', component: Page404},
     ];
@@ -83,6 +86,20 @@ export default function createVueRouter(Store) {
         }
         next();
     });
+
+    Router.getRegExpForPage = (pageName) => {
+        return RegExp(Router.resolve(pageName).fullPath);
+    };
+    Router.afterEach(async (to, from, next) => {
+        const inDenyList = scrollToTopDenyHrefs.reduce((sum, cur) => sum || Router.getRegExpForPage(cur).test(to.fullPath), false);
+        if (!inDenyList || (from.name === to.name)) {
+            await nextTick();
+            scrollSmoothly(document.body, 0);
+        } else {
+            scrollSmoothlyStop();
+        }
+    });
+
 
     Router.beforeResolve(async (to) => {
         if (window?.onbeforeunload) {

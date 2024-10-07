@@ -16,10 +16,14 @@
 
   .section
     margin-bottom 100px
+    position relative
     .title
       text-transform uppercase
       font-large-extra()
       margin-bottom 20px
+      display flex
+      gap 20px
+      align-items center
 
   .bg
     position absolute
@@ -34,7 +38,7 @@
     <CircleLoading v-if="loading" class="loading"></CircleLoading>
 
     <section class="section">
-      <header class="title">Мои проекты</header>
+      <header class="title">Мои проекты<FloatingButton :to="{name: 'createProject'}" title="Создать проект"><img src="../../res/icons/plus.svg" alt="plus" width="30" height="30"></FloatingButton></header>
       <ProjectsList :list="projectsList"></ProjectsList>
     </section>
 
@@ -54,10 +58,11 @@ import TagsCloud from "~/components/TagsCloud.vue";
 import DragNDropLoader from "~/components/DragNDropLoader.vue";
 import ProjectsList from "~/components/ProjectsList.vue";
 import FeedsList from "~/components/FeedsList.vue";
+import FloatingButton from "~/components/FloatingButton.vue";
 
 
 export default {
-  components: {FeedsList, ProjectsList, DragNDropLoader, TagsCloud, CircleLoading},
+  components: {FloatingButton, FeedsList, ProjectsList, DragNDropLoader, TagsCloud, CircleLoading},
 
   data() {
     return {

@@ -10,58 +10,12 @@ export default class MY_API extends REST_API {
     register = (first_name, mid_name, last_name, email, phone, password, client_browser, client_os) => this.#post('/auth/register', {first_name, mid_name, last_name, email, phone, password, client_browser, client_os});
     logout = () => this.#delete('/auth');
 
-    getMyProjects = () => ({
-        data: validateModel(Models.ProjectsList, {
-            projects: [
-                {
-                    id: '41-655',
-                    title: 'Строим коммунизм',
-                    goals: 'Воскресить Ленина, Победить мировую буржуазию',
-                    tags: ['Красный', 'Синий', 'Жёлтый'],
-                    region: 'Москва',
-                    url_for_preview: 'https://vkplay.ru/pre_0x736_resize/hotbox/content_files/news/2022/09/15/ad15ef8debf642bd84acd1486184a202.jpg?quality=85',
-                    format: 'Очно',
-                },
-                {
-                    id: '50-61',
-                    title: 'Уничтожаем коммунизм',
-                    goals: 'Убить Ленина, Возродить мировую буржуазию',
-                    tags: ['Красный', 'Синий', 'Жёлтый'],
-                    region: 'Москва',
-                    url_for_preview: 'https://avatars.mds.yandex.net/i?id=76f28736e27e47fb267124ecba089052db0f203d-12521952-images-thumbs&n=13',
-                    format: 'Очно',
-                },
-                {
-                    id: '50-61',
-                    title: 'Психоологическая помощь после разбитого коммунизма',
-                    goals: 'Возродить мотивацию строить коммунизм',
-                    tags: ['Красный', 'Синий', 'Жёлтый'],
-                    region: 'Москва',
-                    url_for_preview: 'https://avatars.mds.yandex.net/i?id=e0346a13f890524fec12868dc172205f_l-7663003-images-thumbs&n=13',
-                    format: 'Очно',
-                },
-            ]
-        }),
-        status: 200,
-        ok: true,
-    }) //this.#get('/project/my', undefined, Models.ProjectsList);
+    getMyProjects = () => this.#get('/project/my', undefined, Models.ProjectsList);
     getAllProjects = this.getMyProjects //() => this.#get('/project/all', undefined, Models.ProjectsList);
-    getProjectById = (id) => ({
-        data: validateModel(Models.Project, {
-            id: '50-611',
-            title: 'Психологическая помощь после разбитого коммунизма',
-            goals: 'Возродить мотивацию строить коммунизм',
-            tags: ['Красный', 'Синий', 'Жёлтый'],
-            region: 'Москва',
-            url_for_preview: 'https://avatars.mds.yandex.net/i?id=e0346a13f890524fec12868dc172205f_l-7663003-images-thumbs&n=13',
-            format: 'Очно',
-            docs: ['https://localhost:5173/project/41-655asdasdasdasda/asd a/sd/a/sd /as/dasd', 'https://localhost:5173/']
-        }),
-        status: 200,
-        ok: true,
-    }) //this.#get(`/project/${id}`, undefined, Models.Project);
+    getProjectById = (id) => this.#get(`/project/${id}`, undefined, Models.Project);
     editProject = (id, title, goals, tags, region, format, docs) => this.#put(`/project`, {id, title, goals, tags, region, format, docs});
     editProjectPreview = (id, url_for_preview) => this.#put(`/project`, {id, url_for_preview});
+    createProject = (title, goals, tags, region, format, docs, url_for_preview) => this.#post(`/project`, {title, goals, tags, region, format, docs, url_for_preview});
 
     getAllGosPrograms = () => ({
         data: validateModel(Models.GosProgramsList, {

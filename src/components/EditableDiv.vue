@@ -8,7 +8,7 @@
 .root-editable
   input()
   trans()
-  &:not([contenteditablee])
+  &:not([contenteditable='true'])
     border none
     padding 0
 </style>

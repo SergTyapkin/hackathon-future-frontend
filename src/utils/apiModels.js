@@ -62,6 +62,11 @@ export const Project = {
     optional: true,
     default: [],
   },
+  myRole: {
+    type: new Set(['head', 'activist', 'volunteer', 'guest']),
+    optional: true,
+    from: 'your_role',
+  }
 }
 
 export const ProjectsList = {

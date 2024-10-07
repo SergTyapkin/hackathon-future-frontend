@@ -1,26 +1,22 @@
 <style lang="stylus" scoped>
 @require '../styles/constants.styl'
 @require '../styles/utils.styl'
+@require '../styles/fonts.styl'
+@require '../styles/animations.styl'
 
-float-button-height = 50px
+
+float-button-height = 40px
 image-width = 30px
-padding = 5px
 .float-button
-  z-index 10
   cursor pointer
   overflow hidden
-  position fixed
-  bottom 30px
-  right 30px
   @media ({mobile})
     right 20px
   height float-button-height
   min-width float-button-height
-  border-radius((float-button-height / 2))
-  padding padding
-  padding-right ((float-button-height - image-width) / 2)
-  background empColor2_2
-  box-shadow 3px 3px 5px colorShadow
+  border-radius 99999px
+  padding 5px
+  border colorEmp21 2px solid
 
   .fields
     height 100%
@@ -28,30 +24,32 @@ padding = 5px
     align-items center
     text-align center
     flex-direction row
-    justify-content flex-end
     transition all 0.2s ease
     .image
-      transition all 0.2s ease
+      trans()
       width image-width
       height image-width
       opacity 0.8
+      margin 0
     .hover-text
+      font-medium()
+      color colorEmp21
       transition all 0.2s ease
-      overflow hidden
-      width 0
       pointer-events none
+      white-space nowrap
+      width 100%
+      max-width 0
       opacity 0
 .float-button:hover
-  box-shadow 5px 5px 8px colorShadow
   .hover-text
-    width 120px
+    max-width 100vw
     opacity 1
+    padding-right 10px
   .image
     transform scale(1.1)
     opacity 1
+    margin-right 10px
 
-.float-button.green
-  background mix(colorSuccess, black, 70%)
 
 
 @media ({mobile})
@@ -60,19 +58,19 @@ padding = 5px
 </style>
 
 <template>
-  <div class="float-button " :class="{green}">
-    <router-link class="fields" :to="to" v-if="to">
-      <span class="hover-text">{{ title }}</span>
-      <span class="image">
+  <div class="float-button">
+    <router-link v-if="to" class="fields" :to="to">
+      <div class="image">
         <slot></slot>
-      </span>
+      </div>
+      <div class="hover-text">{{ title }}</div>
     </router-link>
 
     <div class="fields" v-else>
-      <span class="hover-text">{{ title }}</span>
-      <span class="image">
+      <div class="image">
         <slot></slot>
-      </span>
+      </div>
+      <div class="hover-text">{{ title }}</div>
     </div>
   </div>
 </template>
@@ -81,7 +79,7 @@ padding = 5px
 export default {
   props: {
     title: String,
-    to: String,
+    to: Object,
     green: Boolean,
   }
 };

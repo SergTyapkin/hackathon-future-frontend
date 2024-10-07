@@ -10,7 +10,7 @@
 
 
 <template>
-  <Selector :model-value="modelValue" :editable="editable" @update:model-value="updateModelValue">
+  <Selector name="region" :model-value="modelValue" :editable="editable" @update:model-value="updateModelValue">
     <option value="Москва">Москва</option>
     <option value="Санкт-Петербург">Санкт-Петербург</option>
     <option value="Адыгея">Республика Адыгея</option>

@@ -153,11 +153,11 @@
             </div>
             <div class="data-row">
               <div class="field">Фамилия:</div>
-              <input class="data" v-model="curUserData.midName" :disabled="!isInEditData" placeholder="Ввша фимилия">
+              <input class="data" v-model="curUserData.lastName" :disabled="!isInEditData" placeholder="Ввша фимилия">
             </div>
             <div class="data-row">
               <div class="field">Отчество:</div>
-              <input class="data" v-model="curUserData.lastName" :disabled="!isInEditData" placeholder="Ввше отчество">
+              <input class="data" v-model="curUserData.midName" :disabled="!isInEditData" placeholder="Ввше отчество">
             </div>
           </div>
 
@@ -203,7 +203,7 @@
 <script>
 import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import {Validators} from "~/utils/validators";
-import {DEFAULT_AVATAR_URL, IMAGE_MAX_RES, IMAGE_PROFILE_MAX_RES, UserRoles} from "~/utils/constants";
+import {DEFAULT_AVATAR_URL, IMAGE_MAX_RES, IMAGE_PROFILE_MAX_RES, UserRolesToNames} from "~/utils/constants";
 import TagsCloud from "~/components/TagsCloud.vue";
 import DragNDropLoader from "~/components/DragNDropLoader.vue";
 
@@ -220,7 +220,7 @@ export default {
       IMAGE_PROFILE_MAX_RES,
       IMAGE_MAX_RES,
       DEFAULT_AVATAR_URL,
-      UserRoles,
+      UserRoles: UserRolesToNames,
     }
   },
 
@@ -257,11 +257,11 @@ export default {
         this.$popups.error("Ошибка ввода", "В поле имени");
         return;
       }
-      if (! Validators.name.validate(newUserData.midName)) {
+      if (! Validators.name.validate(newUserData.lastName)) {
         this.$popups.error("Ошибка ввода", "В поле фамилии");
         return;
       }
-      if (! Validators.name.validate(newUserData.lastName)) {
+      if (! Validators.name.validate(newUserData.midName)) {
         this.$popups.error("Ошибка ввода", "В поле отчества");
         return;
       }

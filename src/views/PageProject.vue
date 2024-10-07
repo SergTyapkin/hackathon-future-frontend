@@ -24,6 +24,7 @@
       flex-direction column
 
   .flex-container
+    overflow hidden
     .avatar-container
       position relative
       border-radius borderRadiusXL
@@ -32,6 +33,7 @@
       min-width 200px
       max-width 300px
       min-height 200px
+      border colorEmp21 1px solid
       @media({mobile})
         max-width unset
         min-height unset
@@ -45,6 +47,10 @@
           width 100%
           object-fit cover
           display block
+    .text-container
+      flex 1
+      @media({desktop})
+        max-width calc(100% - 250px)
 
   .flex-container
     .region
@@ -60,6 +66,24 @@
 
   .selector
     min-width 200px
+
+  .buttons-container
+    display flex
+    gap 40px
+    justify-content space-evenly
+    .button-edit
+      button-link()
+    .button-create
+    .button-save
+      button-success()
+    .button-cancel
+      button-danger()
+    .button-create
+    .button-edit
+    .button-save
+    .button-cancel
+      svg-inside(30px)
+      padding 10px 30px
 </style>
 
 <template>
@@ -67,33 +91,35 @@
     <div class="flex-container">
       <div class="avatar-container">
         <CircleLoading v-if="loading"></CircleLoading>
-        <DragNDropLoader v-else class="image-loader"
+        <DragNDropLoader v-else
+                         class="image-loader"
                          @load="updateAvatar"
                          :crop-size="null"
                          :compress-size="IMAGE_MAX_RES"
+                         :disabled="!canEdit"
         >
           <img class="preview" :src="project.previewUrl || DEFAULT_AVATAR_URL" alt="preview">
         </DragNDropLoader>
       </div>
 
       <div class="text-container">
-        <div class="info" v-if="isMy">Название проекта</div>
-        <EditableDiv class="title" :editable="isInEditMode" v-model="project.title"></EditableDiv>
-        <div class="info">ID{{ project.id }}</div>
+        <div class="info" v-if="canEdit">Название проекта</div>
+        <EditableDiv class="title" :editable="canEdit" v-model="project.title"></EditableDiv>
+        <div v-if="!isInCreateMode" class="info">ID{{ project.id }}</div>
       </div>
     </div>
 
     <br>
 
     <div class="info">Цели проекта</div>
-    <EditableDiv class="goals" v-model="project.goals"></EditableDiv>
+    <EditableDiv class="goals" v-model="project.goals" :editable="canEdit"></EditableDiv>
 
     <br>
     <br>
     <br>
 
     <div class="info">Тэги для поиска</div>
-    <TagsCloud v-model="project.tags" :can-all="isInEditMode"></TagsCloud>
+    <TagsCloud v-model="project.tags" :can-all="canEdit"></TagsCloud>
 
     <br>
     <br>
@@ -102,12 +128,12 @@
     <div class="flex-container">
       <div class="region">
         <div class="info">Регион</div>
-        <RegionsSelector class="selector" :editable="isInEditMode" v-model="project.region"></RegionsSelector>
+        <RegionsSelector class="selector" :editable="canEdit" v-model="project.region"></RegionsSelector>
       </div>
 
       <div class="format">
-        <div class="info">Формат работы</div>
-        <Selector class="selector" :editable="isInEditMode" v-model="project.format">
+        <div class="info">Формат</div>
+        <Selector class="selector" :editable="canEdit" v-model="project.format">
           <option value="Очно">Очно</option>
           <option value="Онлайн">Онлайн</option>
           <option value="Гибрид">Гибрид</option>
@@ -120,7 +146,21 @@
     <br>
 
     <div class="info">Ссылки на документы</div>
-    <TagsCloud v-model="project.docs" :can-all="isInEditMode" :limit="20" links></TagsCloud>
+    <TagsCloud v-model="project.docs" :can-all="canEdit" :limit="20" links></TagsCloud>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="buttons-container">
+      <button v-if="isInEditMode && !isInCreateMode" class="button-cancel" @click="setNotEdited"><img src="../../res/icons/cross.svg" alt="cancel">Отменить</button>
+
+      <button v-if="!isInEditMode && !isInCreateMode" class="button-edit" @click="isInEditMode = true"><img src="../../res/icons/edit.svg" alt="edit">Изменить</button>
+      <button v-if="isInEditMode && !isInCreateMode" class="button-save" @click="editProject"><img src="../../res/icons/save.svg" alt="save">Сохранить</button>
+
+      <button v-if="isInCreateMode" class="button-create" @click="createProject"><img src="../../res/icons/plus.svg" alt="plus">Создать</button>
+    </div>
   </div>
 </template>
 
@@ -128,7 +168,12 @@
 <script>
 import EditableDiv from "~/components/EditableDiv.vue";
 import DragNDropLoader from "~/components/DragNDropLoader.vue";
-import {DEFAULT_AVATAR_URL, IMAGE_MAX_RES, IMAGE_PROFILE_MAX_RES} from "~/utils/constants";
+import {
+  DEFAULT_AVATAR_URL,
+  IMAGE_MAX_RES,
+  IMAGE_PROFILE_MAX_RES,
+  ProjectRoles,
+} from "~/utils/constants";
 import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import TagsCloud from "~/components/TagsCloud.vue";
 import RegionsSelector from "~/components/selectors/RegionsSelector.vue";
@@ -139,13 +184,20 @@ export default {
 
   data() {
     return {
-      loading: [],
+      loading: false,
       isInEditMode: false,
 
-      isMy: true,
-
       projectId: this.$route.params.id,
-      project: {},
+      project: {
+        id: '',
+        title: '',
+        goals: '',
+        tags: [],
+        region: '',
+        previewUrl: '',
+        format: '',
+        docs: [],
+      },
 
       IMAGE_PROFILE_MAX_RES,
       IMAGE_MAX_RES,
@@ -153,14 +205,22 @@ export default {
     }
   },
 
-  mounted() {
-    if (this.projectId === undefined) {
-      this.$popups.error('Ошибка', 'id проекта не передано в url');
-      this.$router.replace({name: 'default'});
-      return;
-    }
+  computed: {
+    canEdit() {
+      return this.isInCreateMode || ([ProjectRoles.activist, ProjectRoles.head].includes(this.project.myRole));
+    },
 
-    this.getProject();
+    isInCreateMode() {
+      return this.projectId === undefined;
+    }
+  },
+
+  mounted() {
+    if (!this.isInCreateMode) {
+      this.getProject();
+    } else {
+      this.isInEditMode = true;
+    }
   },
 
   methods: {
@@ -177,6 +237,10 @@ export default {
       this.project = data;
     },
     async updateAvatar(dataURL) {
+      if (this.isInCreateMode) {
+        this.project.previewUrl = dataURL;
+        return;
+      }
       this.loading = true;
       const {ok} = await this.$api.editProjectPreview(this.projectId, dataURL);
       this.loading = false;
@@ -186,6 +250,27 @@ export default {
       }
 
       this.project.previewUrl = dataURL;
+    },
+
+    async createProject() {
+      if (
+        !this.project.title ||
+        !this.project.goals ||
+        !this.project.region ||
+        !this.project.format
+      ) {
+        this.$popups.error('Не заполнены поля', 'Заполните поля названия, целей, региона, формата');
+        return;
+      }
+      this.loading = true;
+      const {ok} = await this.$api.createProject(this.project.title, this.project.goals, this.project.tags, this.project.region, this.project.format, this.project.docs, this.project.previewUrl);
+      this.loading = false;
+
+      if (!ok) {
+        this.$popups.error('Не получилось создать поект', 'Неизвестная ошибка');
+        return;
+      }
+      this.$router.push({name: 'myProjects'});
     },
 
     setEdited() {

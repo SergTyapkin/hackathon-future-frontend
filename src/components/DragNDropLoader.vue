@@ -34,10 +34,15 @@
   &.in-drag
     &::after
       opacity 1
+
+.root-drag-n-drop-loader.disabled
+  &::after
+  &::before
+    content none
 </style>
 
 <template>
-  <div class="root-drag-n-drop-loader" :class="{'in-drag': isInDrag}"
+  <div class="root-drag-n-drop-loader" :class="{'in-drag': isInDrag, disabled}"
      @dragenter="isInDrag = true"
      @dragleave="isInDrag = false"
      @dragover.prevent="isInDrag = true"
@@ -67,7 +72,8 @@ export default {
     maxAllowedSize: {
       type: Number,
       default: Infinity,
-    }
+    },
+    disabled: Boolean,
   },
 
   data() {
@@ -83,6 +89,9 @@ export default {
     },
 
     async getUserImage() {
+      if (this.disabled) {
+        return;
+      }
       let dataURL;
       try {
         dataURL = await getImageAsDataURL(this.cropSize, this.compressSize, undefined, Infinity);

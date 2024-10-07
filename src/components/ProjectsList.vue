@@ -16,6 +16,11 @@
   gap 60px
   @media({mobile})
     gap 30px
+  .nothing-info
+    font-large()
+    text-align center
+    color colorTextLight3
+
   .project
     animation-opacity-slide-in(0, -50px, 0.4s, 0.1s)
     flex 1
@@ -66,8 +71,10 @@
 
 
 <template>
-  <ul class="root-list-projects">
-    <router-link v-for="(project, idx) in list" :to="{name: 'project', params: {id: project.id}}" class="project __animation-started" :style="{'--animation-index': idx}">
+  <div class="root-list-projects">
+    <header v-if="!list.length" class="nothing-info">Проектов пока что нет</header>
+
+    <router-link v-else v-for="(project, idx) in list" :to="{name: 'project', params: {id: project.id}}" class="project __animation-started" :style="{'--animation-index': idx}">
       <div class="preview"><img :src="project.previewUrl" alt="preview"></div>
 
       <div class="data-container">
@@ -77,7 +84,7 @@
         <TagsCloud class="tags" v-model="project.tags"></TagsCloud>
       </div>
     </router-link>
-  </ul>
+  </div>
 </template>
 
 

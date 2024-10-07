@@ -59,32 +59,32 @@ export default {
   data() {
     return {
       fields: {
-        firstname: {
+        lastname: {
           title: 'Фамилия',
-          name: 'firstname',
+          name: 'lastname',
           type: 'text',
           placeholder: 'Иванов',
+          validationRegExp: Validators.name.regExp,
+          prettifyResult: Validators.name.prettifyResult,
+          autocomplete: 'lastname',
+        },
+        firstname: {
+          title: 'Имя',
+          name: 'firstname',
+          type: 'text',
+          placeholder: 'Иван',
           validationRegExp: Validators.name.regExp,
           prettifyResult: Validators.name.prettifyResult,
           autocomplete: 'firstname',
         },
         midname: {
-          title: 'Имя',
-          name: 'midname',
-          type: 'text',
-          placeholder: 'Иван',
-          validationRegExp: Validators.name.regExp,
-          prettifyResult: Validators.name.prettifyResult,
-          autocomplete: 'midname',
-        },
-        lastname: {
           title: 'Отчество',
-          name: 'lastname',
+          name: 'midname',
           type: 'text',
           placeholder: 'Иванович',
           validationRegExp: Validators.name.regExp,
           prettifyResult: Validators.name.prettifyResult,
-          autocomplete: 'lastname',
+          autocomplete: 'midname',
         },
         email: {
           title: 'Электронная почта',
@@ -125,6 +125,10 @@ export default {
       },
       loading: false,
     }
+  },
+
+  mounted() {
+    this.$scroll.restore();
   },
 
   methods: {

@@ -72,3 +72,34 @@ export function detectOS() {
   if (window.navigator.userAgent.indexOf("Linux")          !== -1) return "Linux";
   return "Unknown OS";
 }
+
+
+let scrollTopPrev = Infinity;
+let stopScroll = undefined;
+export function scrollSmoothly(element, scrollVal, start = true, smoothness = 8) {
+  if (start)
+    stopScroll = false;
+  const scrollTop = element.scrollTop;
+  const newScrollTop = scrollTop + (scrollVal - scrollTop) / smoothness;
+  if ((Math.abs(scrollTopPrev - scrollVal) <= Math.abs(scrollTop - scrollVal)) || (stopScroll === true)) {
+    // User scroll in different side while auto scrolling => stop scrolling
+    scrollTopPrev = Infinity;
+    stopScroll = false;
+    return;
+  } else if (Math.abs(newScrollTop - scrollVal) <= Math.abs(newScrollTop - scrollTop)) {
+    // End of auto scrolling
+    element.scrollTop = scrollVal;
+    scrollTopPrev = Infinity;
+    stopScroll = false;
+    return;
+  } else {
+    // Auto scrolling in process
+    window.requestAnimationFrame(() => scrollSmoothly(element, scrollVal, false, smoothness));
+    element.scrollTop = newScrollTop;
+  }
+  scrollTopPrev = scrollTop;
+}
+
+export function scrollSmoothlyStop() {
+  stopScroll = true;
+}

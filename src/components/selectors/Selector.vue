@@ -47,6 +47,7 @@ export default {
       type: String,
       required: true,
     },
+    name: String
   },
 
   data() {
