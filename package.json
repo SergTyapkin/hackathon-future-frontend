@@ -13,7 +13,7 @@
     "dist": "vite build --out-dir dist"
   },
   "dependencies": {
-    "@korolion/get-image-as-dataurl": "^0.4.1",
+    "@sergtyapkin/image-uploader": "^1.1.4",
     "@sergtyapkin/modals-popups": "^1.1.1",
     "@sergtyapkin/models-validator": "^1.0.6",
     "@sergtyapkin/reconnecting-websocket": "^1.0.5",

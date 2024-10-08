@@ -108,7 +108,7 @@
         <DragNDropLoader v-else
                          class="image-loader"
                          @load="updateAvatar"
-                         :crop-size="null"
+                         :crop-to-square="true"
                          :compress-size="IMAGE_MAX_RES"
                          :disabled="!isInEditMode"
         >
@@ -186,7 +186,7 @@
 
 <script>
 import EditableDiv from "~/components/EditableDiv.vue";
-import DragNDropLoader from "~/components/DragNDropLoader.vue";
+import {DragNDropLoader} from "@sergtyapkin/image-uploader";
 import {
   DEFAULT_AVATAR_URL,
   IMAGE_MAX_RES,

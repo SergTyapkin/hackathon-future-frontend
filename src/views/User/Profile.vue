@@ -125,6 +125,9 @@
             transform rotate(180deg)
         .button-cancel
           background none
+        .button-edit
+          img
+            filter invert(1)
 </style>
 
 <template>
@@ -139,8 +142,8 @@
             <CircleLoading v-if="loading"></CircleLoading>
             <DragNDropLoader v-else class="image-loader"
                              @load="updateAvatar"
-                             :crop-size="IMAGE_PROFILE_MAX_RES"
-                             :compress-size="IMAGE_MAX_RES"
+                             :crop-to-square="true"
+                             :compress-size="IMAGE_PROFILE_MAX_RES"
             >
               <img class="avatar" :src="$user.photoUrl || DEFAULT_AVATAR_URL" alt="avatar">
             </DragNDropLoader>
@@ -205,7 +208,7 @@ import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import {Validators} from "~/utils/validators";
 import {DEFAULT_AVATAR_URL, IMAGE_MAX_RES, IMAGE_PROFILE_MAX_RES, UserRolesToNames} from "~/utils/constants";
 import TagsCloud from "~/components/TagsCloud.vue";
-import DragNDropLoader from "~/components/DragNDropLoader.vue";
+import {DragNDropLoader} from "@sergtyapkin/image-uploader";
 
 
 export default {

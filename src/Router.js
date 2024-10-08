@@ -97,7 +97,7 @@ export default function createVueRouter(Store, scrollToTopDenyHrefs=[]) {
     Router.getRegExpForPage = (pageName) => {
         return RegExp(Router.resolve(pageName).fullPath);
     };
-    Router.afterEach(async (to, from, next) => {
+    Router.afterEach(async (to, from) => {
         const inDenyList = scrollToTopDenyHrefs.reduce((sum, cur) => sum || Router.getRegExpForPage(cur).test(to.fullPath), false);
         if (!inDenyList || (from.name === to.name)) {
             await nextTick();

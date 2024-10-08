@@ -55,14 +55,13 @@
 <script>
 import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import TagsCloud from "~/components/TagsCloud.vue";
-import DragNDropLoader from "~/components/DragNDropLoader.vue";
 import ProjectsList from "~/components/ProjectsList.vue";
 import FeedsList from "~/components/FeedsList.vue";
 import FloatingButton from "~/components/FloatingButton.vue";
 
 
 export default {
-  components: {FloatingButton, FeedsList, ProjectsList, DragNDropLoader, TagsCloud, CircleLoading},
+  components: {FloatingButton, FeedsList, ProjectsList, TagsCloud, CircleLoading},
 
   data() {
     return {
