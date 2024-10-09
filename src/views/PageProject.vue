@@ -186,7 +186,7 @@
 
 <script>
 import EditableDiv from "~/components/EditableDiv.vue";
-import {DragNDropLoader} from "@sergtyapkin/image-uploader";
+import DragNDropLoader from "@sergtyapkin/image-uploader/vue";
 import {
   DEFAULT_AVATAR_URL,
   IMAGE_MAX_RES,

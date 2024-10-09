@@ -72,15 +72,19 @@
 <template>
   <div class="root-tags-cloud">
     <div class="tags-container" :class="{links}">
-      <div v-if="(canAdd || canAll) && (limit === undefined || modelValue === undefined || modelValue.length < limit)" class="adding-container">
-        <input class="input" :size="newTagText.length + 1" :maxlength="links ? '' : 30" v-model="newTagText" :class="{visible: isInputFocused}" ref="input" @focus="isInputFocused = true" @blur="onBlurInput" @keydown.enter="onBlurInput">
-        <button class="button-add" @click="onClickOnAddButton"><img src="../../res/icons/plus.svg" alt="plus"></button>
-      </div>
+      <transition name="opacity">
+        <div v-if="(canAdd || canAll) && (limit === undefined || modelValue === undefined || modelValue.length < limit)" class="adding-container">
+          <input class="input" :size="newTagText.length + 1" :maxlength="links ? '' : 30" v-model="newTagText" :class="{visible: isInputFocused}" ref="input" @focus="isInputFocused = true" @blur="onBlurInput" @keydown.enter="onBlurInput">
+          <button class="button-add" @click="onClickOnAddButton"><img src="../../res/icons/plus.svg" alt="plus"></button>
+        </div>
+      </transition>
 
       <div v-for="(tag, idx) in modelValue" class="tag-container">
         <a class="link" :href="'https://' + tag.replace(/^(https?:\/\/)?(.*)$/, '$2')" target="_blank"><img src="../../res/icons/external_link.svg" alt="link"></a>
         <input class="input" :size="tag.length + 1" :maxlength="links ? '' : 30" v-model="modelValue[idx]" :disabled="!(canEdit || canAll)">
-        <button v-if="canDelete || canAll" class="button-delete" @click="deleteItem(idx)"><img src="../../res/icons/trashbox.svg" alt="delete"></button>
+        <transition name="opacity">
+          <button v-if="canDelete || canAll" class="button-delete" @click="deleteItem(idx)"><img src="../../res/icons/trashbox.svg" alt="delete"></button>
+        </transition>
       </div>
     </div>
   </div>

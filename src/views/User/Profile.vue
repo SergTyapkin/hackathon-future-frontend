@@ -208,7 +208,7 @@ import CircleLoading from "~/components/loaders/CircleLoading.vue";
 import {Validators} from "~/utils/validators";
 import {DEFAULT_AVATAR_URL, IMAGE_MAX_RES, IMAGE_PROFILE_MAX_RES, UserRolesToNames} from "~/utils/constants";
 import TagsCloud from "~/components/TagsCloud.vue";
-import {DragNDropLoader} from "@sergtyapkin/image-uploader";
+import DragNDropLoader from "@sergtyapkin/image-uploader/vue";
 
 
 export default {
